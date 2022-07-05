@@ -1,0 +1,69 @@
+{
+    // ==========[属性格式化]==========
+    "AttributesTolerance": 2, // 单行最大属性数，2[默认]，如果元素属性数不大于此数就不会换行
+    "KeepFirstAttributeOnSameLine": true, // 第一个属性是否与开始标记在同一行，false[默认]
+    "MaxAttributeCharactersPerLine": 60, // 多个属性大于多少个字符就该换行，0[默认]
+    "MaxAttributesPerLine": 2, // 大于几个属性就该换行，1[默认]
+    // 无需换行的元素（比较短的），"RadialGradientBrush, GradientStop, LinearGradientBrush, ScaleTransform, SkewTransform, RotateTransform, TranslateTransform, Trigger, Condition, Setter"[默认]
+    "NewlineExemptionElements": "RadialGradientBrush, GradientStop, LinearGradientBrush, ScaleTransform, SkewTransform, RotateTransform, TranslateTransform, Trigger, Condition, Setter",
+    "AttributeIndentation": 0, // 属性缩进空格字符数（-1不缩进；0[默认]缩进4个空格；其它个数则指定）
+    "AttributeIndentationStyle": 1, // 属性缩进风格（0混合，视情况使用制表符和空格；1[默认]使用空格）
+    "RemoveDesignTimeReferences": false, // 是否移除自动添加的控件和设计时参考内容，false[默认]
+    //
+    // ==========[属性排序]==========
+    "EnableAttributeReordering": true, // 是否启用属性的自动排序，true[默认]
+    "SeparateByGroups": true, // 是否应该按照属性的分组进行分隔，false[默认]
+    /* 属性排序和分组规则
+    */
+    "AttributeOrderingRuleGroups": [
+        "x:Class",
+        "xmlns, xmlns:x",
+        "xmlns:*",
+        "x:Key, Key, x:Name, Name, x:Uid, Uid, Title",
+		"Width, Height, MinWidth, MinHeight, MaxWidth, MaxHeight,MaxLength",
+		"HorizontalAlignment, VerticalAlignment",
+		"TextWrapping, Margin, Padding",
+        "Grid.Row, Grid.RowSpan, Grid.Column, Grid.ColumnSpan, Canvas.Left, Canvas.Top, Canvas.Right, Canvas.Bottom",
+		"Background, Foreground",
+        "Content,Text,IsChecked",
+        "Command,CommandParameter",
+        "HorizontalContentAlignment, VerticalContentAlignment, Panel.ZIndex",
+        "*:*, *",
+		"FontSize, FontFamily",
+        "PageSource, PageIndex, Offset, Color, TargetName, Property, Value, StartPoint, EndPoint",
+        "mc:Ignorable, d:IsDataSource, d:LayoutOverrides, d:IsStaticText",
+        "Storyboard.*, From, To, Duration"
+    ],
+    "FirstLineAttributes": "x:Name", // 应该在第一行的属性，例如Name、x:Name和x:Uid等等，None[默认]
+    "OrderAttributesByName": false, // 是否按照属性名称进行排序
+    //
+    // ==========[元素格式化]==========
+    "PutEndingBracketOnNewLine": false, // 结束括号是否独占一行，false[默认]
+    "RemoveEndingTagOfEmptyElement": true, // 是否移除空元素的结束标签，true[默认]
+    "SpaceBeforeClosingSlash": true, // 自闭合元素的末尾斜杠前是否要有空格，true[默认]
+    "RootElementLineBreakRule": 0, // 是否将根元素的属性分成多行（0[默认]默认；1始终；2从不）
+    //
+    // ==========[元素排序]==========
+    "ReorderVSM": 2, // 是否重新排序Visual State Manager（0未定义；1[默认]移到最后；2移到最前）
+    "ReorderGridChildren": false, // 是否重新排序Grid的子元素，false[默认]
+    "ReorderCanvasChildren": false, // 是否重新排序Canvas的子元素，false[默认]
+    "ReorderSetters": 0, // 是否重新排序Setter（0[默认]不排序；1按属性名；2按目标名；3先按目标名再按属性名）
+    //
+    // ==========[标记扩展]==========
+    "FormatMarkupExtension": true, // 是否格式化标记扩展的属性，true[默认]
+    // 始终放在一行上的标记扩展，"x:Bind, Binding"[默认]
+    "NoNewLineMarkupExtensions": "x:Bind, Binding",
+    //
+    // ==========[属性排序]==========
+    "ThicknessSeparator": 2, // Thickness类型的属性应该用哪种分隔符（0不格式化；1空格；2[默认]逗号）
+    // 被认定为Thickness的元素应该是哪些，"Margin, Padding, BorderThickness, ThumbnailClipMargin"[默认]
+    "ThicknessAttributes": "Margin, Padding, BorderThickness, ThumbnailClipMargin",
+    //
+    // ==========[杂项]==========
+    "FormatOnSave": false, // 是否在保存时进行格式化，true[默认]
+    "CommentPadding": 2, // 注释的间距应该是几个空格，2[默认]
+    //
+    // ==========[覆盖VS配置]==========
+    "IndentSize": 4, // 缩进空格数，4[VS默认]
+    "IndentWithTabs": false // 是否使用制表符进行缩进，false[VS默认]
+}
