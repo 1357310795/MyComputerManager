@@ -29,25 +29,28 @@
             </ui:NavigationStore.Items>-->
         </ui:NavigationStore>
 
-        <Grid Height="Auto"
-              Margin="0,-10,0,0"
-              Grid.Row="1"
-              Background="{DynamicResource ApplicationBackgroundColorBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Menu Background="Transparent">
-                <ui:MenuItem Grid.Column="0"
-                             SymbolIcon="ArrowHookUpLeft24" Click="MenuBack_Click"
-                             FontSize="24" />
-                <ui:MenuItem Grid.Column="0"
-                             SymbolIcon="Add24" Click="MenuAdd_Click"
-                             FontSize="24" />
-            </Menu>
-        </Grid>
+        <DockPanel Height="Auto"
+                   Margin="0,-4,0,4"
+                   Grid.Row="1"
+                   Background="{DynamicResource ApplicationBackgroundColorBrush}"
+                   LastChildFill="False">
+            <ui:MenuItem Width="42" Height="42"
+                         Margin="4,0,0,0" ToolTip="返回主界面"
+                         Style="{StaticResource MyMenuButtonStyle}"
+                         SymbolIcon="ArrowHookUpLeft24" Click="MenuBack_Click"
+                         DockPanel.Dock="Left" />
+            <ui:MenuItem Width="42" Height="42"
+                         Margin="4,0,0,0" ToolTip="添加条目"
+                         Style="{StaticResource MyMenuButtonStyle}"
+                         SymbolIcon="Add24" Click="MenuAdd_Click"
+                         DockPanel.Dock="Left" />
+
+            <ui:MenuItem Width="42" Height="42"
+                         Margin="0,0,4,0" ToolTip="切换亮/暗模式"
+                         Style="{StaticResource MyMenuButtonStyle}"
+                         SymbolIcon="DarkTheme24" Click="MenuTheme_Click"
+                         DockPanel.Dock="Right" />
+        </DockPanel>
         <Grid x:Name="RootMainGrid"
               Margin="0"
               Grid.Row="2"
@@ -58,38 +61,36 @@
             </Grid.RowDefinitions>
             <Frame x:Name="RootFrame" Grid.Row="1" />
         </Grid>
-        <Grid Grid.Row="1" Grid.RowSpan="2" x:Name="WelcomeGrid">
-            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,-20,0,0">
+        <Grid x:Name="WelcomeGrid"
+              Grid.Row="1" Grid.RowSpan="2">
+            <StackPanel VerticalAlignment="Center"
+                        Margin="0,-20,0,0"
+                        Grid.Column="1">
                 <ui:ProgressRing IsIndeterminate="True" />
-                <TextBlock
-                    Margin="0,12,0,0"
-                    FontSize="18"
-                    FontWeight="Medium"
-                    Text="数据加载中..."
-                    FontFamily="微软雅黑"
-                    TextAlignment="Center"
-                    TextWrapping="Wrap" />
+                <TextBlock TextWrapping="Wrap" Margin="0,12,0,0"
+                           Text="数据加载中..."
+                           FontWeight="Medium" TextAlignment="Center"
+                           FontSize="18"/>
             </StackPanel>
         </Grid>
         <!--  The title bar contains window navigation elements and some Tray related extras.  -->
         <!--  You can put additional controls in the header, such as a search bar.  -->
         <!--  <ui:TitleBar.Header />  -->
-        <ui:TitleBar Title="MyComputerManager - v1.0" Grid.Row="0" FontSize="16" Padding="16,10,10,12"/>
+        <ui:TitleBar Title="MyComputerManager - v1.0"
+                     Padding="16,10,10,12"
+                     Grid.Row="0"
+                     FontSize="16" />
 
-        <ui:Dialog
-            x:Name="RootDialog"
-            Grid.Row="1"
-            Grid.RowSpan="2"
-            ButtonLeftName="Click me if you can!"
-            IsShown="false">
+        <ui:Dialog x:Name="RootDialog"
+                   Grid.Row="1" Grid.RowSpan="2"
+                   ButtonLeftName="Click me if you can!" IsShown="false">
             <Grid>
                 <StackPanel>
-                    <TextBlock FontWeight="Medium" Text="WPF UI" />
-                    <TextBlock
-                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                        Text="对话框"
-                        TextAlignment="Justify"
-                        TextWrapping="WrapWithOverflow" />
+                    <TextBlock Text="WPF UI" FontWeight="Medium" />
+                    <TextBlock TextWrapping="WrapWithOverflow"
+                               Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                               Text="对话框"
+                               TextAlignment="Justify" />
                 </StackPanel>
             </Grid>
         </ui:Dialog>

@@ -7,15 +7,73 @@
            xmlns:local="clr-namespace:MyComputerManager.Views"
            xmlns:controls="clr-namespace:MyComputerManager.Controls"
            Title="DetailPage"
-           d:DesignHeight="450" d:DesignWidth="800"
-           Scrollable="True"
+           d:DesignHeight="400" d:DesignWidth="400"
+           d:Background="White" Scrollable="True"
            mc:Ignorable="d">
 
-    <StackPanel x:Name="RootPanel" Orientation="Vertical">
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Text="{Binding Item.Name}"
-                   DockPanel.Dock="Top"
-                   FontSize="20" />
-        <controls:PathBox Margin="2,0" Path="{Binding Item.ExePath}" />
+    <StackPanel x:Name="RootPanel"
+                Margin="10"
+                Orientation="Vertical">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Border Width="68" Height="68"
+                    Grid.RowSpan="2"
+                    Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
+                    ToolTip="图标" CornerRadius="4">
+                <Grid Background="{DynamicResource ControlFillColorDefaultBrush}">
+                    <Image Width="48" Height="48"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Source="{Binding Item.ExeIcon}" />
+                </Grid>
+            </Border>
+            <Border Margin="4,0,0,2"
+                    Grid.Row="0" Grid.Column="1"
+                    Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
+                    CornerRadius="4">
+                <ui:TextBox Text="{Binding Item.Name}"
+                            Style="{StaticResource SimpleTextBoxStyle}"
+                            ToolTip="名称" PlaceholderEnabled="True"
+                            PlaceholderText="名称" Cursor="IBeam" />
+            </Border>
+            <Border Margin="4,2,0,0"
+                    Grid.Row="1" Grid.Column="1"
+                    Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
+                    CornerRadius="4">
+                <ui:TextBox Text="{Binding Item.Desc}"
+                            Style="{StaticResource SimpleTextBoxStyle}"
+                            ToolTip="描述" PlaceholderEnabled="True"
+                            PlaceholderText="描述" />
+            </Border>
+        </Grid>
+        <controls:PathBox Margin="0,4,0,0" Path="{Binding Item.ExePath}" />
+        <controls:RegBox Margin="0,4,0,0" RegPath="{Binding Item.RegKey_Namespace}" />
+        <controls:RegBox Margin="0,4,0,0" RegPath="{Binding Item.RegKey_CLSID}" />
+        
+        <StackPanel HorizontalAlignment="Right"
+                    Margin="0,6,0,0"
+                    Orientation="Horizontal">
+            <ui:Button Width="60" Height="30"
+                       Margin="4,0,0,0"
+                       Content="确定"
+                       Appearance="Primary"
+                       FontSize="12" />
+            <ui:Button Width="60" Height="30"
+                       Margin="4,0,0,0"
+                       Content="取消"
+                       Appearance="Secondary"
+                       FontSize="12" />
+            <ui:Button Width="60" Height="30"
+                       Margin="4,0,0,0"
+                       Content="应用"
+                       Appearance="Secondary"
+                       FontSize="12" />
+        </StackPanel>
     </StackPanel>
 </ui:UiPage>

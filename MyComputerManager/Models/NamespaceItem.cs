@@ -12,9 +12,10 @@ namespace MyComputerManager.Models
 {
     public class NamespaceItem
     {
-        public NamespaceItem(string name, string exePath, string iconPath, RegistryKey key, bool disabled, string cLSID)
+        public NamespaceItem(string name, string desc, string exePath, string iconPath, RegistryKey key, bool disabled, string cLSID)
         {
             Name = name;
+            Desc = desc;
             ExePath = exePath;
             IconPath = iconPath;
             RegKey = key;
@@ -42,6 +43,22 @@ namespace MyComputerManager.Models
         }
 
         public RegistryKey RegKey { get; set; }
+
+        public string RegKey_Namespace
+        {
+            get { 
+                return RegKey.Name + @"\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\" + CLSID; 
+            }
+        }
+
+        public string RegKey_CLSID
+        {
+            get
+            {
+                return RegKey.Name + @"\SOFTWARE\Classes\CLSID\" + CLSID;
+            }
+        }
+
 
         public void SetEnable()
         {

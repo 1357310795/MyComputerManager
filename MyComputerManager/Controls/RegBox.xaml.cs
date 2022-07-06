@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevTools.RegistryJump;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -14,31 +15,30 @@ using System.Windows.Shapes;
 
 namespace MyComputerManager.Controls
 {
-    public partial class PathBox : UserControl
+    public partial class RegBox : UserControl
     {
-        public PathBox()
+        public RegBox()
         {
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty PathProperty = DependencyProperty.Register(
-            nameof(Path), typeof(string), typeof(PathBox),
+        public static readonly DependencyProperty RegPathProperty = DependencyProperty.Register(nameof(RegPath), typeof(string), typeof(RegBox),
             new PropertyMetadata(null));
 
-        public string Path
+        public string RegPath
         {
-            get { return (string)GetValue(PathProperty); }
-            set { SetValue(PathProperty, value); }
+            get { return (string)GetValue(RegPathProperty); }
+            set { SetValue(RegPathProperty, value); }
         }
 
         private void ButtonCopy_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(Path);
+            Clipboard.SetText(RegPath);
         }
 
         private void ButtonOpen_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("explorer", "/select," + Path);
+            RegistryEditor.OpenRegistryEditor(RegPath);
         }
     }
 }

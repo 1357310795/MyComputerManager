@@ -84,7 +84,7 @@ namespace MyComputerManager.Helpers
                     string exepath = (string)(exekey?.GetValue("") ?? "");
 
                     if (name == "") continue;
-                    list.Add(new NamespaceItem(name, exepath, iconpath, rootkey, disabled, item));
+                    list.Add(new NamespaceItem(name, desc, exepath, iconpath, rootkey, disabled, item));
                 }
             }
             return list;

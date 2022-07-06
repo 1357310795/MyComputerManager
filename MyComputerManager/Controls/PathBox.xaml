@@ -13,13 +13,36 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <ui:TextBox Text="{Binding Path, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:PathBox}}}" Style="{StaticResource PathBoxTextBoxStyle}" ToolTip="可执行文件路径（若默认为空则表示程序并非使用Shell\Open\Command方式指定可执行文件路径）" PlaceholderEnabled="True" PlaceholderText="可执行文件路径"/>
+            <ui:TextBox Text="{Binding Path, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:PathBox}}}" Style="{StaticResource SimpleTextBoxStyle}" ToolTip="可执行文件路径（若默认为空则表示程序并非使用Shell\Open\Command方式指定可执行文件路径）" PlaceholderEnabled="True" PlaceholderText="可执行文件路径"/>
             <Button Grid.Column="1"
-                    Content=""
-                    Style="{StaticResource PathBoxButtonStyle}" />
+                    Style="{StaticResource PathBoxButtonStyle}" Click="ButtonCopy_Click">
+                <Image Width="20" Height="20">
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <DrawingGroup ClipGeometry="M0,0 V48 H48 V0 H0 Z">
+                                    <GeometryDrawing Brush="{DynamicResource TextFillColorPrimaryBrush}" Geometry="F1 M48,48z M0,0z M18.5,5C15.480226,5,13,7.4802259,13,10.5L13,32.5C13,35.519774,15.480226,38,18.5,38L34.5,38C37.519774,38,40,35.519774,40,32.5L40,10.5C40,7.4802259,37.519774,5,34.5,5L18.5,5z M18.5,8L34.5,8C35.898226,8,37,9.1017741,37,10.5L37,32.5C37,33.898226,35.898226,35,34.5,35L18.5,35C17.101774,35,16,33.898226,16,32.5L16,10.5C16,9.1017741,17.101774,8,18.5,8z M11,10L9.78125,10.8125C8.66825,11.5545,8,12.803625,8,14.140625L8,33.5C8,38.747,12.253,43,17.5,43L30.859375,43C32.197375,43,33.4465,42.33175,34.1875,41.21875L35,40 17.5,40C13.91,40,11,37.09,11,33.5L11,10z" />
+                                </DrawingGroup>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+            </Button>
+                    
             <Button Grid.Column="2"
-                    Content=""
-                    Style="{StaticResource PathBoxButtonStyle}" />
+                    Style="{StaticResource PathBoxButtonStyle}" Click="ButtonOpen_Click">
+                <Image Width="20" Height="20">
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <DrawingGroup ClipGeometry="M0,0 V48 H48 V0 H0 Z">
+                                    <GeometryDrawing Brush="{DynamicResource TextFillColorPrimaryBrush}" Geometry="F1 M48,48z M0,0z M8.5,8C6.0324991,8,4,10.032499,4,12.5L4,36.40625 4.015625,36.40625C3.9865145,38.276932,5.5083888,40,7.5019531,40L36.546875,40C38.416875,40,40.10278,38.832994,40.759766,37.082031L45.767578,23.75 45.767578,23.746094C46.62354,21.501657,44.900814,19,42.498047,19L42,19 42,17.5C42,15.032499,39.967501,13,37.5,13L24.042969,13 19.574219,9.2753906A1.50015,1.50015,0,0,0,19.572266,9.2753906C18.584102,8.4521105,17.339162,8,16.052734,8L8.5,8z M8.5,11L16.052734,11C16.638307,11,17.202555,11.205358,17.652344,11.580078L22.539062,15.652344A1.50015,1.50015,0,0,0,23.5,16L37.5,16C38.346499,16,39,16.653501,39,17.5L39,19 13.453125,19C11.583125,19,9.8972196,20.167006,9.2402344,21.917969L7,27.882812 7,12.5C7,11.653501,7.6535009,11,8.5,11z M13.453125,22L42.498047,22C42.897907,22,43.107444,22.305152,42.964844,22.677734A1.50015,1.50015,0,0,0,42.960938,22.6875L37.951172,36.027344C37.730157,36.616381,37.176875,37,36.546875,37L7.5019531,37C7.1042373,37,6.8935735,36.697099,7.0332031,36.326172A1.50015,1.50015,0,0,0,7.0351562,36.324219L12.048828,22.972656C12.269843,22.383619,12.823125,22,13.453125,22z" />
+                                </DrawingGroup>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+            </Button>
         </Grid>
     </controls:ClippingBorder>
 </UserControl>

@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
@@ -21,7 +22,8 @@ namespace MyComputerManager
     {
         private readonly IDataService _dataService;
         private readonly INavigationService _navigationService;
-        public MainWindow(INavigationService navigationService, IPageService pageService, IDataService dataService)
+        private readonly IThemeService _themeService;
+        public MainWindow(INavigationService navigationService, IPageService pageService, IDataService dataService, IThemeService themeService)
         {
             InitializeComponent();
             Wpf.Ui.Appearance.Background.Apply(this, Wpf.Ui.Appearance.BackgroundType.Mica);
@@ -30,6 +32,7 @@ namespace MyComputerManager
             navigationService.SetNavigation(RootNavigation);
             _dataService = dataService;
             _navigationService = navigationService;
+            _themeService = themeService;
 
             WelcomeGrid.Visibility = Visibility.Visible;
         }
@@ -99,6 +102,11 @@ namespace MyComputerManager
         public void CloseWindow()
         {
             Close();
+        }
+
+        private void MenuTheme_Click(object sender, RoutedEventArgs e)
+        {
+            _themeService.SetTheme(_themeService.GetTheme() == ThemeType.Dark ? ThemeType.Light : ThemeType.Dark);
         }
     }
 }

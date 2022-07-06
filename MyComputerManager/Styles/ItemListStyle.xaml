@@ -6,9 +6,7 @@
     <DataTemplate x:Key="ListItemDataTemplate">
         <ui:CardControl Margin="4,0,4,2"
                         Command="{Binding DataContext.GoDetailCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:MainPage}}}"
-                        CommandParameter="{Binding}"
-                        TextElement.FontFamily="微软雅黑"
-                        FontFamily="微软雅黑">
+                        CommandParameter="{Binding}">
             <ui:CardControl.Header>
                 <DockPanel>
                     <Image Width="32" Height="32"
@@ -20,12 +18,12 @@
                         <TextBlock Text="{Binding Name}"
                                    FontWeight="Medium"
                                    ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
-                                   FontSize="13" FontFamily="微软雅黑" />
+                                   FontSize="13"/>
                         <TextBlock HorizontalAlignment="Left"
                                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                                    Text="{Binding ExePath}"
                                    ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
-                                   FontSize="12" FontFamily="微软雅黑" />
+                                   FontSize="12"/>
                     </StackPanel>
                 </DockPanel>
             </ui:CardControl.Header>
