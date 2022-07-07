@@ -136,21 +136,25 @@ namespace MyComputerManager.ViewModels
                 if (e.ChangedButton != MouseButton.Left)
                     return;
             OpenFileDialog d = new OpenFileDialog();
-            d.Filter = StringHelper.BuildFilter("exe,ico");
+            d.Filter = StringHelper.BuildFilter("exe,ico,dll");
             if (d.ShowDialog() ?? false)
                 Item.IconPath = d.FileName;
 
             Item.Icon = IconHelper.ReadIcon(Item.IconPath);
+            if (Item.Icon == null)
+                Item.IconPath = "";
         }
 
         public void ButtonOpenIcon_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog d = new OpenFileDialog();
-            d.Filter = StringHelper.BuildFilter("exe,ico");
+            d.Filter = StringHelper.BuildFilter("exe,ico,dll");
             if (d.ShowDialog() ?? false)
                 Item.IconPath = d.FileName;
 
             Item.Icon = IconHelper.ReadIcon(Item.IconPath);
+            if (Item.Icon == null)
+                Item.IconPath = "";
         }
 
         public void ButtonCopy_Click(object content)
@@ -178,7 +182,7 @@ namespace MyComputerManager.ViewModels
             var filelist = e.Data.GetData("FileDrop");
             if (filelist == null)
             {
-                _snackBarService.Show("不支持的操作", "拖放exe或ico文件到此以打开图标", SymbolRegular.Info16, ControlAppearance.Secondary, 5000);
+                _snackBarService.Show("不支持的操作", "拖放exe/ico/dll文件到此以打开图标", SymbolRegular.Info16, ControlAppearance.Secondary, 5000);
                 return;
             }
             string filepath = ((string[])filelist).First();
@@ -190,14 +194,16 @@ namespace MyComputerManager.ViewModels
                 return;
             }
 
-            if (!new List<string>() { ".exe", ".ico" }.Contains(fileInfo.Extension.ToLower()))
+            if (!new List<string>() { ".exe", ".ico", ".dll" }.Contains(fileInfo.Extension.ToLower()))
             {
-                _snackBarService.Show("不支持的文件类型", "拖放exe或ico文件到此以打开图标", SymbolRegular.Info16, ControlAppearance.Secondary, 5000);
+                _snackBarService.Show("不支持的文件类型", "拖放exe/ico/dll文件到此以打开图标", SymbolRegular.Info16, ControlAppearance.Secondary, 5000);
                 return;
             }
 
             Item.IconPath = filepath;
             Item.Icon = IconHelper.ReadIcon(Item.IconPath);
+            if (Item.Icon == null)
+                Item.IconPath = "";
         }
 
         public async Task ButtonDelete_Click()

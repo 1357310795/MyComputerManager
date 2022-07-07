@@ -18,7 +18,9 @@ namespace System.Drawing
 {
     public static class IconHelper
     {
-        public static Icon ExtractIcon(string filePath, IconSize size)
+        [DllImport("User32.dll")]
+        internal static extern uint PrivateExtractIcons(string szFileName, int nIconIndex, int cxIcon, int cyIcon, IntPtr[] phicon, uint[] piconid, uint nIcons, uint flags);
+        public static Icon ReadIconFromExe(string filePath, IconSize size)
         {
             Icon icon = null;
             var fileInfo = new SHFILEINFOW();
@@ -54,6 +56,26 @@ namespace System.Drawing
             return icon;
         }
 
+        public static Bitmap ReadIconFromDll(string filePath)
+        {
+            uint _nIcons = PrivateExtractIcons(filePath, 0, 0, 0, null, null, 0, 0);
+            IntPtr[] phicon = new IntPtr[_nIcons];
+            uint[] piconid = new uint[_nIcons];
+            uint nIcons = PrivateExtractIcons(filePath, 0, 48, 48, phicon, piconid, _nIcons, 0);
+
+            for (int i = 0; i < nIcons; i++)
+            {
+                Icon icon = Icon.FromHandle(phicon[i]);
+                Bitmap bitmap = icon.ToBitmap();
+                icon.Dispose();
+                NativeMethods.DestroyIcon(phicon[i]);
+
+                if (bitmap.PixelFormat == Imaging.PixelFormat.Format32bppArgb)
+                    return bitmap;
+            }
+            return null;
+        }
+
         public static ImageSource ReadIcon(string iconPath)
         {
             if (File.Exists(iconPath))
@@ -75,8 +97,13 @@ namespace System.Drawing
                 }
                 else if (f.Extension.ToLower() == ".exe")
                 {
-                    Icon i = IconHelper.ExtractIcon(iconPath, IconSize.ExtraLarge);
+                    Icon i = IconHelper.ReadIconFromExe(iconPath, IconSize.ExtraLarge);
                     return BitmapHelper.ToBitmapSource(i.ToBitmap());
+                }
+                else if (f.Extension.ToLower() == ".dll")
+                {
+                    Bitmap i = IconHelper.ReadIconFromDll(iconPath);
+                    return BitmapHelper.ToBitmapSource(i);
                 }
             }
             return null;
