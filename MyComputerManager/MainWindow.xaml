@@ -46,7 +46,12 @@
                          Style="{StaticResource MyMenuButtonStyle}"
                          SymbolIcon="Add24" Click="MenuAdd_Click"
                          DockPanel.Dock="Left" />
-
+            <ui:MenuItem Width="42" Height="42"
+                         Margin="4,0,0,0"
+                         ToolTip="关于"
+                         Style="{StaticResource MyMenuButtonStyle}"
+                         SymbolIcon="Info24" Click="MenuInfo_Click"
+                         DockPanel.Dock="Left" />
             <ui:MenuItem Width="42" Height="42"
                          Margin="0,0,4,0"
                          ToolTip="切换亮/暗模式"
@@ -56,7 +61,7 @@
         </DockPanel>
         <Border x:Name="RootMainGrid"
               Margin="0" CornerRadius="4,4,0,0"
-              Grid.Row="2" Background="{DynamicResource ControlFillColorDefaultBrush}"
+              Grid.Row="2"
               >
             <Frame x:Name="RootFrame"/>
         </Border>

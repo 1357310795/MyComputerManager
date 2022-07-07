@@ -121,5 +121,10 @@ namespace MyComputerManager
         {
             _themeService.SetTheme(_themeService.GetTheme() == ThemeType.Dark ? ThemeType.Light : ThemeType.Dark);
         }
+
+        private void MenuInfo_Click(object sender, RoutedEventArgs e)
+        {
+            _navigationService.Navigate(typeof(AboutPage));
+        }
     }
 }

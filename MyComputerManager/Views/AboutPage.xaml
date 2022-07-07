@@ -1,0 +1,44 @@
+﻿<Page x:Class="MyComputerManager.Views.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MyComputerManager.Views"
+      mc:Ignorable="d"  d:Background="White"
+      d:DesignHeight="600" d:DesignWidth="400"
+      Title="AboutPage">
+    <StackPanel Margin="0,10,0,0" Orientation="Vertical">
+        <Image Width="128">
+            <Image.Source>
+                <DrawingImage>
+                    <DrawingImage.Drawing>
+                        <DrawingGroup ClipGeometry="M0,0 V48 H48 V0 H0 Z">
+                            <GeometryDrawing Brush="#FF35C1F1" Geometry="F1 M48,48z M0,0z M38.999,13.511L31.221,5.733C30.263,4.775,28.715,4.754,27.731,5.686L19.999,13.011 19.999,16.361 37.574,16.361C38.361,16.361,38.999,15.723,38.999,14.936L38.999,13.511z" />
+                            <GeometryDrawing Brush="#FF50E6FF" Geometry="F1 M48,48z M0,0z M34,15.464L22.411,3.875C21.266,2.73,19.419,2.706,18.244,3.819L12,9.734 12,12.959C12,14.343,13.122,15.465,14.506,15.465L34,15.465z" />
+                            <GeometryDrawing Geometry="F1 M48,48z M0,0z M41,42L7,42C6.45,42,6,41.55,6,41L6,10C6,9.448,6.448,9,7,9L41,9C41.552,9,42,9.448,42,10L42,41C42,41.55,41.55,42,41,42z">
+                                <GeometryDrawing.Brush>
+                                    <LinearGradientBrush StartPoint="15.322,4.792" EndPoint="31.427,43.222" MappingMode="Absolute" SpreadMethod="Pad" Opacity="1">
+                                        <GradientStop Color="#FFEBA84B" Offset="0" />
+                                        <GradientStop Color="#FFD97218" Offset="1" />
+                                    </LinearGradientBrush>
+                                </GeometryDrawing.Brush>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FF633412">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="28,37,10,2" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FF633412" Geometry="F1 M48,48z M0,0z M20,13L28,13C28.552,13,29,13.448,29,14L29,14C29,14.552,28.552,15,28,15L20,15C19.448,15,19,14.552,19,14L19,14C19,13.448,19.448,13,20,13z" />
+                            <GeometryDrawing Brush="#FF633412" Geometry="F1 M48,48z M0,0z M38,32L38,32 36,30 34,32 35,32 35,35 37,35 37,32z" />
+                            <GeometryDrawing Brush="#FF633412" Geometry="F1 M48,48z M0,0z M32,32L32,32 30,30 28,32 29,32 29,35 31,35 31,32z" />
+                        </DrawingGroup>
+                    </DrawingImage.Drawing>
+                </DrawingImage>
+            </Image.Source>
+        </Image>
+        <TextBlock Text="MyComputerManager" HorizontalAlignment="Center" FontSize="20"/>
+        <TextBlock Text="v0.1" HorizontalAlignment="Center" FontSize="16" Margin="0,6,0,0"/>
+        <TextBlock Text="作者：Teruteru" HorizontalAlignment="Center" FontSize="16" Margin="0,6,0,0"/>
+        <TextBlock Text="GitHub开源地址" HorizontalAlignment="Center" FontSize="16" Margin="0,6,0,0" TextDecorations="Underline" Foreground="Blue" MouseUp="TextBlock_MouseUp"/>
+    </StackPanel>
+</Page>

@@ -65,7 +65,7 @@ namespace MyComputerManager
             services.AddSingleton<INavigationService, NavigationService>();
             
 
-            services.AddSingleton<Services.Contracts.ISnackBarService, SnackBarService>();
+            services.AddSingleton<ISnackBarService, SnackBarService>();
             services.AddSingleton<IDataService, DataService>();
             services.AddSingleton<IDialogService, DialogService>();
 
@@ -80,7 +80,7 @@ namespace MyComputerManager
             services.AddTransient<DetailPage>();
             services.AddTransient<DetailPageViewModel>();
 
-            //services.AddScoped<List<NamespaceItem>>();
+            services.AddSingleton<AboutPage>();
 
             // Configuration
             services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));

@@ -8,7 +8,7 @@
            xmlns:controls="clr-namespace:MyComputerManager.Controls"
            xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
            xmlns:converters="clr-namespace:MyComputerManager.Converters" xmlns:ext="clr-namespace:MyComputerManager.Extensions"
-           Title="DetailPage"
+           Title="DetailPage"  Background="{DynamicResource ControlFillColorDefaultBrush}"
            d:DesignHeight="400" d:DesignWidth="400"
            d:Background="White" Scrollable="True"
            mc:Ignorable="d">

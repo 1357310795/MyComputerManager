@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:MyComputerManager.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    Title="MainPage"
+    Title="MainPage"  Background="{DynamicResource ControlFillColorDefaultBrush}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
