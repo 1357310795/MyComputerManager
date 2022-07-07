@@ -18,7 +18,7 @@
                         Style="{StaticResource SimpleTextBoxStyle}"
                         ToolTip="注册表路径" PlaceholderEnabled="True"
                         PlaceholderText="注册表路径" IsReadOnly="True" />
-            <Button Grid.Column="1" Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ui:UiPage}}}" CommandParameter="{Binding RegPath, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:RegBox}}}"
+            <Button Grid.Column="1" Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}}" CommandParameter="{Binding RegPath, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:RegBox}}}"
                     Style="{StaticResource PathBoxButtonStyle}"
                      ToolTip="复制到剪切板">
                 <Image Width="20" Height="20">

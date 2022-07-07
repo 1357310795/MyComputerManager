@@ -1,4 +1,4 @@
-﻿<ui:UiPage x:Class="MyComputerManager.Views.DetailPage"
+﻿<Page x:Class="MyComputerManager.Views.DetailPage"
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,10 +7,11 @@
            xmlns:local="clr-namespace:MyComputerManager.Views"
            xmlns:controls="clr-namespace:MyComputerManager.Controls"
            xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-           xmlns:converters="clr-namespace:MyComputerManager.Converters" xmlns:ext="clr-namespace:MyComputerManager.Extensions"
-           Title="DetailPage"  Background="{DynamicResource ControlFillColorDefaultBrush}"
+           xmlns:converters="clr-namespace:MyComputerManager.Converters"
+           xmlns:ext="clr-namespace:MyComputerManager.Extensions"
+           Title="DetailPage"
+           Background="{DynamicResource ControlFillColorDefaultBrush}"
            d:DesignHeight="400" d:DesignWidth="400"
-           d:Background="White" Scrollable="True"
            mc:Ignorable="d">
 
     <StackPanel x:Name="RootPanel"
@@ -18,19 +19,20 @@
                 Orientation="Vertical">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="34"/>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="34"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="104" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Border Width="102" Height="102"
-                    Grid.RowSpan="3" x:Name="BorderIcon"
+            <Border x:Name="BorderIcon"
+                    Width="104" Height="104"
+                    Grid.RowSpan="3" Margin="0"
                     Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
-                    ToolTip="图标（支持exe和ico）" CornerRadius="4" AllowDrop="True"
-                    Cursor="Hand">
+                    ToolTip="图标（支持exe和ico）" CornerRadius="4"
+                    AllowDrop="True" Cursor="Hand">
                 <Border.Resources>
                     <converters:ValueNullToInverseVisibilityConverter x:Key="ValueNullToInverseVisibilityConverter" />
                 </Border.Resources>
@@ -42,7 +44,7 @@
                         <i:InvokeCommandAction Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding OpenIconCommand}"/>
+                        <i:InvokeCommandAction Command="{Binding OpenIconCommand}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <Grid Background="{DynamicResource ControlFillColorDefaultBrush}">
@@ -71,29 +73,29 @@
                     </ContextMenu>
                 </Border.ContextMenu>
             </Border>
-            <Border Margin="4,0,0,2"
+            <Border Margin="4,0,0,2" Height="32"
                     Grid.Row="0" Grid.Column="1"
                     Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
-                    SnapsToDevicePixels="True" CornerRadius="4">
+                    CornerRadius="4">
                 <ui:TextBox Text="{Binding Item.Name}"
                             BorderThickness="0"
                             Style="{StaticResource SimpleTextBoxStyle}"
                             ToolTip="名称" PlaceholderEnabled="True"
                             PlaceholderText="名称" />
             </Border>
-            <Border Margin="4,2,0,2"
+            <Border Margin="4,2,0,2" Height="32"
                     Grid.Row="1" Grid.Column="1"
                     Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
-                    SnapsToDevicePixels="True" CornerRadius="4">
+                     CornerRadius="4">
                 <ui:TextBox Text="{Binding Item.Desc}"
                             Style="{StaticResource SimpleTextBoxStyle}"
                             ToolTip="描述" PlaceholderEnabled="True"
                             PlaceholderText="描述" />
             </Border>
-            <Border Margin="4,2,0,0"
+            <Border Margin="4,2,0,0" Height="32"
                     Grid.Row="2" Grid.Column="1"
                     Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
-                    SnapsToDevicePixels="True" CornerRadius="4">
+                     CornerRadius="4">
                 <ui:TextBox Text="{Binding Item.Tip}"
                             Style="{StaticResource SimpleTextBoxStyle}"
                             ToolTip="提示文字" PlaceholderEnabled="True"
@@ -106,33 +108,32 @@
         <controls:RegBox Margin="0,4,0,0" RegPath="{Binding Item.RegKey_Namespace}" />
         <controls:RegBox Margin="0,4,0,0" RegPath="{Binding Item.RegKey_CLSID}" />
 
-        <DockPanel  LastChildFill="False"
-                    Margin="0,6,0,0">
+        <DockPanel Margin="0,6,0,0" LastChildFill="False">
             <ui:Button Width="60" Height="30"
                        Margin="4,0,0,0"
-                       Content="应用" DockPanel.Dock="Right"
+                       Content="应用"
                        Command="{Binding ApplyCommand}"
-                       Appearance="Secondary"
+                       DockPanel.Dock="Right" Appearance="Secondary"
                        FontSize="12" />
             <ui:Button Width="60" Height="30"
                        Margin="4,0,0,0"
-                       Content="取消" DockPanel.Dock="Right"
+                       Content="取消"
                        Command="{Binding CancelCommand}"
-                       Appearance="Secondary"
+                       DockPanel.Dock="Right" Appearance="Secondary"
                        FontSize="12" />
             <ui:Button Width="60" Height="30"
                        Margin="4,0,0,0"
-                       Content="确定" DockPanel.Dock="Right"
+                       Content="确定"
                        Command="{Binding OkCommand}"
-                       Appearance="Primary"
+                       DockPanel.Dock="Right" Appearance="Primary"
                        FontSize="12" />
-            <ui:Button Width="30" Height="30" Padding="0"
-                       Margin="0,0,4,0"
-                       DockPanel.Dock="Left" ToolTip="删除项目"
+            <ui:Button Width="30" Height="30"
+                       Margin="0,0,4,0" Padding="0"
                        Command="{Binding DeleteCommand}"
+                       DockPanel.Dock="Left" ToolTip="删除项目"
                        Appearance="Danger">
-                <ui:SymbolIcon Symbol="Delete16" Foreground="White"/>
+                <ui:SymbolIcon Foreground="White" Symbol="Delete16" />
             </ui:Button>
         </DockPanel>
     </StackPanel>
-</ui:UiPage>
+</Page>

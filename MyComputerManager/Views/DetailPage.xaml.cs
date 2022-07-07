@@ -21,7 +21,7 @@ namespace MyComputerManager.Views
     /// <summary>
     /// DetailPage.xaml 的交互逻辑
     /// </summary>
-    public partial class DetailPage : UiPage
+    public partial class DetailPage
     {
         public DetailPage(DetailPageViewModel vm)
         {
