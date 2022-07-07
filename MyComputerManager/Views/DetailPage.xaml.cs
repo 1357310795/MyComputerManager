@@ -1,4 +1,5 @@
-﻿using MyComputerManager.ViewModels;
+﻿using MyComputerManager.Extensions;
+using MyComputerManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace MyComputerManager.Views
         {
             InitializeComponent();
             this.DataContext = vm;
+            ClickExtensions.AddClickHandler(BorderIcon, new RoutedEventHandler(vm.ButtonOpenIcon_Click));
         }
     }
 }

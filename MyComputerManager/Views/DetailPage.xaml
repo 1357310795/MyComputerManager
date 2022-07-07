@@ -6,6 +6,8 @@
            xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
            xmlns:local="clr-namespace:MyComputerManager.Views"
            xmlns:controls="clr-namespace:MyComputerManager.Controls"
+           xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+           xmlns:converters="clr-namespace:MyComputerManager.Converters" xmlns:ext="clr-namespace:MyComputerManager.Extensions"
            Title="DetailPage"
            d:DesignHeight="400" d:DesignWidth="400"
            d:Background="White" Scrollable="True"
@@ -18,62 +20,119 @@
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Border Width="68" Height="68"
-                    Grid.RowSpan="2"
+            <Border Width="102" Height="102"
+                    Grid.RowSpan="3" x:Name="BorderIcon"
                     Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
-                    ToolTip="图标" CornerRadius="4">
+                    ToolTip="图标（支持exe和ico）" CornerRadius="4" AllowDrop="True"
+                    Cursor="Hand">
+                <Border.Resources>
+                    <converters:ValueNullToInverseVisibilityConverter x:Key="ValueNullToInverseVisibilityConverter" />
+                </Border.Resources>
+                <i:Interaction.Behaviors>
+                    <ext:ClickBehavior />
+                </i:Interaction.Behaviors>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Drop">
+                        <i:InvokeCommandAction Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding OpenIconCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <Grid Background="{DynamicResource ControlFillColorDefaultBrush}">
-                    <Image Width="48" Height="48"
+                    <Image Width="56" Height="56"
+                           Visibility="{Binding Item.Icon, Converter={StaticResource ValueNullToInverseVisibilityConverter}}">
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <DrawingGroup ClipGeometry="M0,0 V48 H48 V0 H0 Z">
+                                        <GeometryDrawing Brush="{DynamicResource TextPlaceholderColorBrush}" Geometry="F1 M48,48z M0,0z M11.5,6C8.47,6,6,8.47,6,11.5L6,36.5C6,39.53,8.47,42,11.5,42L24.050781,42C23.460781,41.07,22.980625,40.07,22.640625,39L11.5,39C11.4,39,11.299219,38.990469,11.199219,38.980469L11.195312,38.980469 23.269531,27.289062C23.619531,26.959063 24.209375,26.919219 24.609375,27.199219 25.209375,26.399219 25.909688,25.659766 26.679688,25.009766 25.159688,23.669766 22.659453,23.710859 21.189453,25.130859L9.0292969,36.894531C9.0290993,36.893266 9.0294926,36.891891 9.0292969,36.890625 9.0092969,36.760625 9,36.63 9,36.5L9,11.5C9,10.12,10.12,9,11.5,9L36.5,9C37.88,9,39,10.12,39,11.5L39,22.640625C40.07,22.980625,41.07,23.460781,42,24.050781L42,11.5C42,8.47,39.53,6,36.5,6L11.5,6z M30.5,13C29.125,13 27.903815,13.569633 27.128906,14.441406 26.353997,15.313179 26,16.416667 26,17.5 26,18.583333 26.353997,19.686821 27.128906,20.558594 27.903815,21.430367 29.125,22 30.5,22 31.875,22 33.096185,21.430367 33.871094,20.558594 34.646003,19.686821 35,18.583333 35,17.5 35,16.416667 34.646003,15.313179 33.871094,14.441406 33.096185,13.569633 31.875,13 30.5,13z M30.5,16C31.124999,16 31.403816,16.180367 31.628906,16.433594 31.853997,16.686821 32,17.083333 32,17.5 32,17.916667 31.853997,18.313179 31.628906,18.566406 31.403816,18.819633 31.124999,19 30.5,19 29.875001,19 29.596184,18.819633 29.371094,18.566406 29.146003,18.313179 29,17.916667 29,17.5 29,17.083333 29.146003,16.686821 29.371094,16.433594 29.596184,16.180367 29.875001,16 30.5,16z M35,24C28.925,24 24,28.925 24,35 24,41.075 28.925,46 35,46 41.075,46 46,41.075 46,35 46,28.925 41.075,24 35,24z M35,27C35.552,27,36,27.448,36,28L36,34 42,34C42.552,34 43,34.448 43,35 43,35.552 42.552,36 42,36L36,36 36,42C36,42.552 35.552,43 35,43 34.448,43 34,42.552 34,42L34,36 28,36C27.448,36 27,35.552 27,35 27,34.448 27.448,34 28,34L34,34 34,28C34,27.448,34.448,27,35,27z" />
+                                    </DrawingGroup>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+                    <Image x:Name="ImageIcon"
+                           Width="72" Height="72"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Source="{Binding Item.ExeIcon}" />
+                           Source="{Binding Item.Icon}" />
                 </Grid>
+                <Border.ContextMenu>
+                    <ContextMenu>
+                        <ui:MenuItem Command="{Binding OpenIconCommand}" Header="打开图标" />
+                        <ui:MenuItem Command="{Binding CopyIconPathCommand}" Header="复制当前图标路径" />
+                        <ui:MenuItem Command="{Binding ClearIconCommand}" Header="清除图标" />
+                    </ContextMenu>
+                </Border.ContextMenu>
             </Border>
             <Border Margin="4,0,0,2"
                     Grid.Row="0" Grid.Column="1"
                     Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
-                    CornerRadius="4">
+                    SnapsToDevicePixels="True" CornerRadius="4">
                 <ui:TextBox Text="{Binding Item.Name}"
+                            BorderThickness="0"
                             Style="{StaticResource SimpleTextBoxStyle}"
                             ToolTip="名称" PlaceholderEnabled="True"
-                            PlaceholderText="名称" Cursor="IBeam" />
+                            PlaceholderText="名称" />
             </Border>
-            <Border Margin="4,2,0,0"
+            <Border Margin="4,2,0,2"
                     Grid.Row="1" Grid.Column="1"
                     Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
-                    CornerRadius="4">
+                    SnapsToDevicePixels="True" CornerRadius="4">
                 <ui:TextBox Text="{Binding Item.Desc}"
                             Style="{StaticResource SimpleTextBoxStyle}"
                             ToolTip="描述" PlaceholderEnabled="True"
                             PlaceholderText="描述" />
             </Border>
+            <Border Margin="4,2,0,0"
+                    Grid.Row="2" Grid.Column="1"
+                    Background="{DynamicResource ControlStrokeColorSecondaryBrush}"
+                    SnapsToDevicePixels="True" CornerRadius="4">
+                <ui:TextBox Text="{Binding Item.Tip}"
+                            Style="{StaticResource SimpleTextBoxStyle}"
+                            ToolTip="提示文字" PlaceholderEnabled="True"
+                            PlaceholderText="提示文字" />
+            </Border>
         </Grid>
-        <controls:PathBox Margin="0,4,0,0" Path="{Binding Item.ExePath}" />
+        <controls:PathBox Margin="0,4,0,0"
+                          Path="{Binding Item.ExePath, Mode=TwoWay}"
+                          AllowExt="exe" />
         <controls:RegBox Margin="0,4,0,0" RegPath="{Binding Item.RegKey_Namespace}" />
         <controls:RegBox Margin="0,4,0,0" RegPath="{Binding Item.RegKey_CLSID}" />
-        
-        <StackPanel HorizontalAlignment="Right"
-                    Margin="0,6,0,0"
-                    Orientation="Horizontal">
+
+        <DockPanel  LastChildFill="False"
+                    Margin="0,6,0,0">
             <ui:Button Width="60" Height="30"
                        Margin="4,0,0,0"
-                       Content="确定"
+                       Content="应用" DockPanel.Dock="Right"
+                       Command="{Binding ApplyCommand}"
+                       Appearance="Secondary"
+                       FontSize="12" />
+            <ui:Button Width="60" Height="30"
+                       Margin="4,0,0,0"
+                       Content="取消" DockPanel.Dock="Right"
+                       Command="{Binding CancelCommand}"
+                       Appearance="Secondary"
+                       FontSize="12" />
+            <ui:Button Width="60" Height="30"
+                       Margin="4,0,0,0"
+                       Content="确定" DockPanel.Dock="Right"
+                       Command="{Binding OkCommand}"
                        Appearance="Primary"
                        FontSize="12" />
-            <ui:Button Width="60" Height="30"
-                       Margin="4,0,0,0"
-                       Content="取消"
-                       Appearance="Secondary"
-                       FontSize="12" />
-            <ui:Button Width="60" Height="30"
-                       Margin="4,0,0,0"
-                       Content="应用"
-                       Appearance="Secondary"
-                       FontSize="12" />
-        </StackPanel>
+            <ui:Button Width="30" Height="30" Padding="0"
+                       Margin="0,0,4,0"
+                       DockPanel.Dock="Left" ToolTip="删除项目"
+                       Command="{Binding DeleteCommand}"
+                       Appearance="Danger">
+                <ui:SymbolIcon Symbol="Delete16" Foreground="White"/>
+            </ui:Button>
+        </DockPanel>
     </StackPanel>
 </ui:UiPage>

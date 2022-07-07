@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -10,24 +11,112 @@ using System.Windows.Media.Imaging;
 
 namespace MyComputerManager.Models
 {
-    public class NamespaceItem
+    public class NamespaceItem : INotifyPropertyChanged
     {
-        public NamespaceItem(string name, string desc, string exePath, string iconPath, RegistryKey key, bool disabled, string cLSID)
+        public NamespaceItem()
+        {
+
+        }
+        public NamespaceItem(string name, string desc, string tip, string exePath, string iconPath, RegistryKey key, bool disabled, string cLSID)
         {
             Name = name;
             Desc = desc;
+            Tip = tip;
             ExePath = exePath;
             IconPath = iconPath;
             RegKey = key;
             isEnabled = !disabled;
             CLSID = cLSID;
         }
-        public string CLSID { get; set; }
-        public string Name { get; set; }
-        public string Desc { get; set; }
-        public string ExePath { get; set; }
-        public string IconPath { get; set; }
-        public ImageSource ExeIcon { get; set; }
+
+        public NamespaceItem(string name)
+        {
+            Name = name;
+            RegKey = Registry.CurrentUser;
+            isEnabled = true;
+            CLSID = null;
+            Desc = "";
+            Tip = "";
+            ExePath = "";
+            IconPath = "";
+        }
+
+        private string cLSID;
+        public string CLSID
+        {
+            get { return cLSID; }
+            set
+            {
+                cLSID = value;
+                this.RaisePropertyChanged("CLSID");
+            }
+        }
+
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                this.RaisePropertyChanged("Name");
+            }
+        }
+
+        private string desc;
+        public string Desc
+        {
+            get { return desc; }
+            set
+            {
+                desc = value;
+                this.RaisePropertyChanged("Desc");
+            }
+        }
+
+        private string tip;
+        public string Tip
+        {
+            get { return tip; }
+            set
+            {
+                tip = value;
+                this.RaisePropertyChanged("Tip");
+            }
+        }
+        
+        private string exePath;
+        public string ExePath
+        {
+            get { return exePath; }
+            set
+            {
+                exePath = value;
+                this.RaisePropertyChanged("ExePath");
+            }
+        }
+
+        private string iconPath;
+        public string IconPath
+        {
+            get { return iconPath; }
+            set
+            {
+                iconPath = value;
+                this.RaisePropertyChanged("IconPath");
+            }
+        }
+
+        private ImageSource icon;
+        public ImageSource Icon
+        {
+            get { return icon; }
+            set
+            {
+                icon = value;
+                this.RaisePropertyChanged("Icon");
+            }
+        }
 
         private bool isEnabled;
         public bool IsEnabled
@@ -35,10 +124,11 @@ namespace MyComputerManager.Models
             get { return isEnabled; }
             set { 
                 isEnabled = value;
-                if (value)
-                    SetEnable();
-                else
-                    SetDisable();
+                this.RaisePropertyChanged("IsEnabled");
+                //if (value)
+                //    SetEnable();
+                //else
+                //    SetDisable();
             }
         }
 
@@ -59,37 +149,37 @@ namespace MyComputerManager.Models
             }
         }
 
-
-        public void SetEnable()
+        public NamespaceItem Clone()
         {
-            try
+            return new NamespaceItem()
             {
-                var namespacekey = RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace");
-                var namespacekey1 = RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpaceDisabled");
-                namespacekey1.DeleteSubKey(CLSID);
-                var newkey = namespacekey.CreateSubKey(CLSID);
-                newkey.SetValue("", Name, RegistryValueKind.String);
-            }
-            catch(Exception ex)
+                CLSID = CLSID,
+                Name = Name,
+                Desc = Desc,
+                Tip = Tip,
+                IconPath = IconPath,
+                RegKey = RegKey,
+                IsEnabled = IsEnabled,
+                Icon = Icon,
+                ExePath = ExePath
+            };
+        }
+
+        #region INotifyPropertyChanged members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
             {
-                Debug.WriteLine(ex);
+                var e = new PropertyChangedEventArgs(propertyName);
+                handler(this, e);
             }
         }
 
-        public void SetDisable()
-        {
-            try
-            {
-                var namespacekey = RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpaceDisabled");
-                var namespacekey1 = RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace");
-                namespacekey1.DeleteSubKey(CLSID);
-                var newkey = namespacekey.CreateSubKey(CLSID);
-                newkey.SetValue("", Name, RegistryValueKind.String);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-        }
+        #endregion
+
     }
 }

@@ -1,8 +1,10 @@
-﻿using MyComputerManager.Models;
+﻿using MyComputerManager.Helpers;
+using MyComputerManager.Models;
 using MyComputerManager.Services.Contracts;
 using MyComputerManager.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,17 +17,21 @@ namespace MyComputerManager.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
-        public MainPageViewModel(INavigationService navigationService, IDataService dataService)
+        private readonly ISnackBarService _snackBarService;
+        public MainPageViewModel(INavigationService navigationService, IDataService dataService, ISnackBarService snackBarService)
         {
             _navigationService = navigationService;
             _dataService = dataService;
-            Items = (List<NamespaceItem>)_dataService.GetData();
+            _snackBarService = snackBarService;
+            Items = (ObservableCollection<NamespaceItem>)_dataService.GetData();
+            dataService.SetVM(this);
             GoDetailCommand = new RelayCommand(GoDetail);
+            ToggleCommand = new RelayCommand(ToggleEnabled);
         }
 
-        private List<NamespaceItem> items;
+        private ObservableCollection<NamespaceItem> items;
 
-        public List<NamespaceItem> Items
+        public ObservableCollection<NamespaceItem> Items
         {
             get { return items; }
             set
@@ -43,5 +49,29 @@ namespace MyComputerManager.ViewModels
         }
 
         public RelayCommand GoDetailCommand { get; set; }
+        public RelayCommand ToggleCommand { get; set; }
+
+        public void ToggleEnabled(object obj)
+        {
+            NamespaceItem item = (NamespaceItem)obj;
+            var res = NamespaceHelper.SetEnabled(item, item.IsEnabled);
+            if (!res.success)
+            {
+                _snackBarService.Show("操作失败", res.result, SymbolRegular.ShieldError16);
+                item.IsEnabled = !item.IsEnabled;
+            }
+        }
+
+        public void DeleteItem(NamespaceItem item)
+        {
+            if (item != null)
+                if (Items.Contains(item))
+                    Items.Remove(item);
+        }
+
+        public void AddItem(NamespaceItem item)
+        {
+            Items.Add(item);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MyComputerManager.Services.Contracts;
+using MyComputerManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,18 @@ namespace MyComputerManager.Services
         public void SetData(object data)
         {
             _data = data;
+        }
+
+        private MainPageViewModel vm;
+
+        public MainPageViewModel GetVM()
+        {
+            return vm;
+        }
+
+        public void SetVM(MainPageViewModel data)
+        {
+            vm = data;
         }
     }
 }

@@ -11,7 +11,7 @@
                 <DockPanel>
                     <Image Width="32" Height="32"
                            DockPanel.Dock="Left"
-                           Source="{Binding ExeIcon}" />
+                           Source="{Binding Icon}" />
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Margin="12,0"
                                 Grid.Column="0">
@@ -27,7 +27,7 @@
                     </StackPanel>
                 </DockPanel>
             </ui:CardControl.Header>
-            <ui:ToggleSwitch IsChecked="{Binding IsEnabled}" />
+            <ui:ToggleSwitch IsChecked="{Binding IsEnabled}" Command="{Binding DataContext.ToggleCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:MainPage}}}" CommandParameter="{Binding}"/>
         </ui:CardControl>
     </DataTemplate>
 

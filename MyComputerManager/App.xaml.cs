@@ -63,9 +63,11 @@ namespace MyComputerManager
 
             // Service containing navigation, same as INavigationWindow... but without window
             services.AddSingleton<INavigationService, NavigationService>();
+            
 
-
+            services.AddSingleton<Services.Contracts.ISnackBarService, SnackBarService>();
             services.AddSingleton<IDataService, DataService>();
+            services.AddSingleton<IDialogService, DialogService>();
 
             // Main window container with navigation
             services.AddScoped<INavigationWindow, MainWindow>();

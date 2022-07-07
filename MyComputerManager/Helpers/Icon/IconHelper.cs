@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyComputerManager;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -10,6 +11,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace System.Drawing
 {
@@ -37,7 +40,7 @@ namespace System.Drawing
 
                 NativeMethods.DestroyIcon(hIcon);
 
-                if (icon.ToBitmap().PixelFormat != PixelFormat.Format32bppArgb)
+                if (icon.ToBitmap().PixelFormat != Imaging.PixelFormat.Format32bppArgb)
                 {
                     icon.Dispose();
 
@@ -49,6 +52,34 @@ namespace System.Drawing
             }
 
             return icon;
+        }
+
+        public static ImageSource ReadIcon(string iconPath)
+        {
+            if (File.Exists(iconPath))
+            {
+                var f = new FileInfo(iconPath);
+                if (f.Extension.ToLower() == ".ico")
+                {
+                    Stream iconStream = new FileStream(iconPath, FileMode.Open, FileAccess.Read);
+                    IconBitmapDecoder decoder = new IconBitmapDecoder(
+                            iconStream,
+                            BitmapCreateOptions.PreservePixelFormat,
+                            BitmapCacheOption.None);
+                    var reslist = decoder.Frames.ToList();
+
+                    if (reslist.Count > 0)
+                    {
+                        return reslist.OrderBy(x => (x.Format == PixelFormats.Bgra32 ? 1 : 2)).ThenByDescending(x => x.PixelHeight).First();
+                    }
+                }
+                else if (f.Extension.ToLower() == ".exe")
+                {
+                    Icon i = IconHelper.ExtractIcon(iconPath, IconSize.ExtraLarge);
+                    return BitmapHelper.ToBitmapSource(i.ToBitmap());
+                }
+            }
+            return null;
         }
     }
 }

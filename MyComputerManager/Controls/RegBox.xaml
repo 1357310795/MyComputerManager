@@ -18,7 +18,9 @@
                         Style="{StaticResource SimpleTextBoxStyle}"
                         ToolTip="注册表路径" PlaceholderEnabled="True"
                         PlaceholderText="注册表路径" IsReadOnly="True" />
-            <Button Grid.Column="1" Style="{StaticResource PathBoxButtonStyle}" Click="ButtonCopy_Click">
+            <Button Grid.Column="1" Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ui:UiPage}}}" CommandParameter="{Binding RegPath, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:RegBox}}}"
+                    Style="{StaticResource PathBoxButtonStyle}"
+                     ToolTip="复制到剪切板">
                 <Image Width="20" Height="20">
                     <Image.Source>
                         <DrawingImage>
@@ -31,7 +33,9 @@
                     </Image.Source>
                 </Image>
             </Button>
-            <Button Grid.Column="2" Style="{StaticResource PathBoxButtonStyle}" Click="ButtonOpen_Click">
+            <Button Grid.Column="2" ToolTip="在注册表编辑器中定位"
+                    Style="{StaticResource PathBoxButtonStyle}"
+                    Click="ButtonOpen_Click">
                 <Image Width="20" Height="20">
                     <Image.Source>
                         <DrawingImage>

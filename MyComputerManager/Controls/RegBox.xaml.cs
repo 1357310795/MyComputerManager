@@ -31,11 +31,6 @@ namespace MyComputerManager.Controls
             set { SetValue(RegPathProperty, value); }
         }
 
-        private void ButtonCopy_Click(object sender, RoutedEventArgs e)
-        {
-            Clipboard.SetText(RegPath);
-        }
-
         private void ButtonOpen_Click(object sender, RoutedEventArgs e)
         {
             RegistryEditor.OpenRegistryEditor(RegPath);

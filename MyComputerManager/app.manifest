@@ -16,7 +16,7 @@
             如果你的应用程序需要此虚拟化来实现向后兼容性，则移除此
             元素。
         -->
-		  <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+		  <!--<requestedExecutionLevel  level="highestAvailable" uiAccess="false" />-->
       </requestedPrivileges>
     </security>
   </trustInfo>

@@ -13,9 +13,9 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <ui:TextBox Text="{Binding Path, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:PathBox}}}" Style="{StaticResource SimpleTextBoxStyle}" ToolTip="可执行文件路径（若默认为空则表示程序并非使用Shell\Open\Command方式指定可执行文件路径）" PlaceholderEnabled="True" PlaceholderText="可执行文件路径"/>
-            <Button Grid.Column="1"
-                    Style="{StaticResource PathBoxButtonStyle}" Click="ButtonCopy_Click">
+            <ui:TextBox Text="{Binding Path, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:PathBox}}}" Style="{StaticResource SimpleTextBoxStyle}" ToolTip="可执行文件路径（若默认为空则表示程序并非使用Shell\Open\Command方式指定可执行文件路径）" PlaceholderEnabled="True" PlaceholderText="可执行文件路径（包含命令行参数）"/>
+            <Button Grid.Column="1" ToolTip="复制到剪切板" Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ui:UiPage}}}" CommandParameter="{Binding Path, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:PathBox}}}"
+                    Style="{StaticResource PathBoxButtonStyle}">
                 <Image Width="20" Height="20">
                     <Image.Source>
                         <DrawingImage>
@@ -28,9 +28,9 @@
                     </Image.Source>
                 </Image>
             </Button>
-                    
-            <Button Grid.Column="2"
-                    Style="{StaticResource PathBoxButtonStyle}" Click="ButtonOpen_Click">
+
+            <Button Grid.Column="2" ToolTip="浏览文件" Click="ButtonOpen_Click"
+                    Style="{StaticResource PathBoxButtonStyle}">
                 <Image Width="20" Height="20">
                     <Image.Source>
                         <DrawingImage>

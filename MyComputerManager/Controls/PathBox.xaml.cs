@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using MyComputerManager.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,9 +24,6 @@ namespace MyComputerManager.Controls
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty PathProperty = DependencyProperty.Register(
-            nameof(Path), typeof(string), typeof(PathBox),
-            new PropertyMetadata(null));
 
         public string Path
         {
@@ -31,14 +31,26 @@ namespace MyComputerManager.Controls
             set { SetValue(PathProperty, value); }
         }
 
-        private void ButtonCopy_Click(object sender, RoutedEventArgs e)
+        public static readonly DependencyProperty PathProperty = DependencyProperty.Register(
+            nameof(Path), typeof(string), typeof(PathBox),
+            new PropertyMetadata(null));
+
+        public string AllowExt
         {
-            Clipboard.SetText(Path);
+            get { return (string)GetValue(AllowExtProperty); }
+            set { SetValue(AllowExtProperty, value); }
         }
+
+        public static readonly DependencyProperty AllowExtProperty =
+            DependencyProperty.Register("AllowExt", typeof(string), typeof(PathBox), new PropertyMetadata(null));
 
         private void ButtonOpen_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("explorer", "/select," + Path);
+            //Process.Start("explorer", "/select," + Path);
+            OpenFileDialog d = new OpenFileDialog();
+            d.Filter = StringHelper.BuildFilter(AllowExt);
+            if (d.ShowDialog() ?? false)
+                Path = d.FileName;
         }
     }
 }

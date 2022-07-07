@@ -1,8 +1,10 @@
 ﻿using MyComputerManager.Helpers;
+using MyComputerManager.Models;
 using MyComputerManager.Services.Contracts;
 using MyComputerManager.ViewModels;
 using MyComputerManager.Views;
 using System;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -18,21 +20,27 @@ namespace MyComputerManager
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window, INavigationWindow
+    public partial class MainWindow : INavigationWindow
     {
         private readonly IDataService _dataService;
         private readonly INavigationService _navigationService;
         private readonly IThemeService _themeService;
-        public MainWindow(INavigationService navigationService, IPageService pageService, IDataService dataService, IThemeService themeService)
+        private readonly ISnackBarService _snackBarService;
+        private readonly IDialogService _dialogService;
+        public MainWindow(INavigationService navigationService, IPageService pageService, IDataService dataService, IThemeService themeService, ISnackBarService snackBarService, IDialogService dialogService)
         {
             InitializeComponent();
             Wpf.Ui.Appearance.Background.Apply(this, Wpf.Ui.Appearance.BackgroundType.Mica);
 
             SetPageService(pageService);
             navigationService.SetNavigation(RootNavigation);
+            snackBarService.SetSnackbar(RootSnackbar);
+            dialogService.SetDialog(RootDialog);
             _dataService = dataService;
             _navigationService = navigationService;
             _themeService = themeService;
+            _snackBarService = snackBarService;
+            _dialogService = dialogService;
 
             WelcomeGrid.Visibility = Visibility.Visible;
         }
@@ -48,14 +56,17 @@ namespace MyComputerManager
             Task.Run(async () =>
             {
                 var data = NamespaceHelper.GetItems();
-                await Task.Delay(2000);
+                await Task.Delay(1000);
 
                 await Dispatcher.InvokeAsync(() =>
                 {
                     WelcomeGrid.Visibility = Visibility.Collapsed;
                     RootMainGrid.Visibility = Visibility.Visible;
 
-                    _dataService.SetData(data);
+                    var o = new ObservableCollection<NamespaceItem>();
+                    foreach (var item in data)
+                        o.Add(item);
+                    _dataService.SetData(o);
                     var res = _navigationService.Navigate(typeof(MainPage));
                     //var res = _navigationService.Navigate(typeof(Input));
                 });
@@ -71,7 +82,9 @@ namespace MyComputerManager
 
         private void MenuAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            var item = new NamespaceItem("新建项目");
+            _dataService.SetData(item);
+            _navigationService.Navigate(typeof(DetailPage));
         }
 
         public Frame GetFrame()

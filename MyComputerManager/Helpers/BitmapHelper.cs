@@ -17,11 +17,6 @@ namespace MyComputerManager
             return ToBitmapSource(image as Bitmap);
         }
 
-        /// <summary>
-        /// Convert an IImage to a WPF BitmapSource. The result can be used in the Set Property of Image.Source
-        /// </summary>
-        /// <param name="bitmap">The Source Bitmap</param>
-        /// <returns>The equivalent BitmapSource</returns>
         public static BitmapSource ToBitmapSource(System.Drawing.Bitmap bitmap)
         {
             if (bitmap == null) return null;
@@ -57,6 +52,8 @@ namespace MyComputerManager
 
             return result;
         }
+
+
     }
 
     internal static class NativeMethods

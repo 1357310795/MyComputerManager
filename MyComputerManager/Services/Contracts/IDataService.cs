@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyComputerManager.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,9 @@ namespace MyComputerManager.Services.Contracts
         void SetData(object data);
 
         object GetData();
+
+        MainPageViewModel GetVM();
+
+        void SetVM(MainPageViewModel data);
     }
 }
