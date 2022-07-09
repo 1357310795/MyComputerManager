@@ -66,14 +66,14 @@ namespace MyComputerManager.Helpers
                 }
                 if (itemkey == null)
                 {
-                    clsidrootkey = Registry.CurrentUser;
-                    clsidkey = clsidrootkey.OpenSubKey(@"SOFTWARE\Classes\WOW6432Node\CLSID", false);
+                    clsidrootkey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
+                    clsidkey = clsidrootkey.OpenSubKey(@"SOFTWARE\Classes\CLSID", false);
                     itemkey = clsidkey.OpenSubKey(item, false);
                 }
                 if (itemkey == null)
                 {
-                    clsidrootkey = Registry.LocalMachine;
-                    clsidkey = clsidrootkey.OpenSubKey(@"SOFTWARE\Classes\WOW6432Node\CLSID", false);
+                    clsidrootkey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+                    clsidkey = clsidrootkey.OpenSubKey(@"SOFTWARE\Classes\CLSID", false);
                     itemkey = clsidkey.OpenSubKey(item, false);
                 }
                 if (itemkey != null)
@@ -89,7 +89,7 @@ namespace MyComputerManager.Helpers
                     string exepath = (string)(exekey?.GetValue("") ?? "");
 
                     if (name == "") continue;
-                    list.Add(new NamespaceItem(name, desc, tip, exepath, iconpath, rootkey, clsidkey, disabled, item));
+                    list.Add(new NamespaceItem(name, desc, tip, exepath, iconpath, rootkey, clsidrootkey, disabled, item));
                 }
             }
             return list;
@@ -105,7 +105,7 @@ namespace MyComputerManager.Helpers
                 var namespaceSubKey = namespaceKey.CreateSubKey(item.CLSID, true);
                 if (namespaceSubKey == null)
                     return new CommonResult(false, "找不到Namespace下的" + item.CLSID);
-                var clsidKey = item.RegKey1;
+                var clsidKey = item.RegKey1.CreateSubKey(@"SOFTWARE\Classes\CLSID", true);
                 if (clsidKey == null)
                     return new CommonResult(false, "找不到CLSID key");
                 var clsidSubKey = clsidKey.CreateSubKey(item.CLSID, true);
@@ -196,7 +196,7 @@ namespace MyComputerManager.Helpers
                     return new CommonResult(false, "找不到Namespace key");
                 namespaceKey.DeleteSubKeyTree(item.CLSID, false);
 
-                var clsidKey = item.RegKey1;
+                var clsidKey = item.RegKey1.OpenSubKey(@"SOFTWARE\Classes\CLSID", true); ;
                 if (clsidKey == null)
                     return new CommonResult(false, "找不到CLSID key");
                 clsidKey.DeleteSubKeyTree(item.CLSID, false);

@@ -78,7 +78,7 @@
             </StackPanel>
         </Grid>
 
-        <ui:TitleBar Title="MyComputerManager - v1.01"
+        <ui:TitleBar Title="MyComputerManager - v1.02"
                      Padding="10,10,10,12"
                      Grid.Row="0"
                      Icon="/Resources/openbox.ico"

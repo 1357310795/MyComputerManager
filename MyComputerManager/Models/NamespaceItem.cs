@@ -34,7 +34,7 @@ namespace MyComputerManager.Models
         {
             Name = name;
             RegKey = Registry.CurrentUser;
-            RegKey1 = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Classes\CLSID", true);
+            RegKey1 = Registry.CurrentUser;
             isEnabled = true;
             CLSID = null;
             Desc = "";
@@ -148,7 +148,7 @@ namespace MyComputerManager.Models
         {
             get
             {
-                return RegKey1.Name + @"\" + CLSID;
+                return RegKey1.Name + (RegKey1.View == RegistryView.Default ? @"\SOFTWARE\Classes\CLSID\" : @"\SOFTWARE\Classes\WOW6432Node\CLSID\") + CLSID;
             }
         }
 
