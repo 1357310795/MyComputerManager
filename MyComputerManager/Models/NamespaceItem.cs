@@ -17,7 +17,7 @@ namespace MyComputerManager.Models
         {
 
         }
-        public NamespaceItem(string name, string desc, string tip, string exePath, string iconPath, RegistryKey key, bool disabled, string cLSID)
+        public NamespaceItem(string name, string desc, string tip, string exePath, string iconPath, RegistryKey key, RegistryKey key1, bool disabled, string cLSID)
         {
             Name = name;
             Desc = desc;
@@ -25,6 +25,7 @@ namespace MyComputerManager.Models
             ExePath = exePath;
             IconPath = iconPath;
             RegKey = key;
+            RegKey1 = key1;
             isEnabled = !disabled;
             CLSID = cLSID;
         }
@@ -33,6 +34,7 @@ namespace MyComputerManager.Models
         {
             Name = name;
             RegKey = Registry.CurrentUser;
+            RegKey1 = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Classes\CLSID", true);
             isEnabled = true;
             CLSID = null;
             Desc = "";
@@ -133,6 +135,7 @@ namespace MyComputerManager.Models
         }
 
         public RegistryKey RegKey { get; set; }
+        public RegistryKey RegKey1 { get; set; }
 
         public string RegKey_Namespace
         {
@@ -145,7 +148,7 @@ namespace MyComputerManager.Models
         {
             get
             {
-                return @"HKEY_CLASSES_ROOT\CLSID\" + CLSID;
+                return RegKey1.Name + @"\" + CLSID;
             }
         }
 
@@ -159,6 +162,7 @@ namespace MyComputerManager.Models
                 Tip = Tip,
                 IconPath = IconPath,
                 RegKey = RegKey,
+                RegKey1 = RegKey1,
                 IsEnabled = IsEnabled,
                 Icon = Icon,
                 ExePath = ExePath
