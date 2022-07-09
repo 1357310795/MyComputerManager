@@ -34,7 +34,7 @@ namespace MyComputerManager
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            Wpf.Ui.Appearance.Accent.Apply(Color.FromRgb(15, 123, 210));
+            //Wpf.Ui.Appearance.Accent.Apply(Color.FromRgb(15, 123, 210));
 
             _host = Host.CreateDefaultBuilder(e.Args)
             .ConfigureAppConfiguration(c =>

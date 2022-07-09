@@ -55,8 +55,10 @@ namespace MyComputerManager.Helpers
                 return new List<NamespaceItem>();
             foreach (var item in LocalMachineNamespace.GetSubKeyNames())
             {
-                var clsidkey = rootkey.OpenSubKey(@"SOFTWARE\Classes\CLSID", false);
+                var clsidkey = Registry.ClassesRoot.OpenSubKey(@"CLSID", false);
                 var itemkey = clsidkey.OpenSubKey(item, false);
+                //var clsidkey = rootkey.OpenSubKey(@"SOFTWARE\Classes\CLSID", false);
+                //var itemkey = clsidkey.OpenSubKey(item, false);
                 if (itemkey != null)
                 {
                     var iconkey = itemkey.OpenSubKey("DefaultIcon");
@@ -86,7 +88,7 @@ namespace MyComputerManager.Helpers
                 var namespaceSubKey = namespaceKey.CreateSubKey(item.CLSID, true);
                 if (namespaceSubKey == null)
                     return new CommonResult(false, "找不到Namespace下的" + item.CLSID);
-                var clsidKey = item.RegKey.CreateSubKey(@"SOFTWARE\Classes\CLSID", true);
+                var clsidKey = Registry.ClassesRoot.CreateSubKey(@"CLSID", true);
                 if (clsidKey == null)
                     return new CommonResult(false, "找不到CLSID key");
                 var clsidSubKey = clsidKey.CreateSubKey(item.CLSID, true);

@@ -7,7 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ui:Resources Theme="Light"/>
+                <ui:Resources Theme="Dark"/>
                 <ResourceDictionary Source="Styles/ItemListStyle.xaml"/>
                 <ResourceDictionary Source="Styles/PathBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/MenuButtonStyle.xaml"/>

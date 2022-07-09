@@ -145,7 +145,7 @@ namespace MyComputerManager.Models
         {
             get
             {
-                return RegKey.Name + @"\SOFTWARE\Classes\CLSID\" + CLSID;
+                return @"HKEY_CLASSES_ROOT\CLSID\" + CLSID;
             }
         }
 

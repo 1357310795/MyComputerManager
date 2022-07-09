@@ -30,8 +30,9 @@ namespace MyComputerManager
         public MainWindow(INavigationService navigationService, IPageService pageService, IDataService dataService, IThemeService themeService, ISnackBarService snackBarService, IDialogService dialogService)
         {
             InitializeComponent();
-            Wpf.Ui.Appearance.Background.Apply(this, Wpf.Ui.Appearance.BackgroundType.Mica);
-
+            //Wpf.Ui.Appearance.Background.Apply(this, Wpf.Ui.Appearance.BackgroundType.Mica);
+            //var c = Accent.GetColorizationColor();
+            //System.Windows.MessageBox.Show(c.ToString());
             SetPageService(pageService);
             navigationService.SetNavigation(RootNavigation);
             snackBarService.SetSnackbar(RootSnackbar);
@@ -47,6 +48,7 @@ namespace MyComputerManager
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            _themeService.SetTheme(ThemeType.Light);
             RootNavigation.Frame = RootFrame;
             RootNavigation.Items.Add(new NavigationItem() { PageType = typeof(MainPage), Cache = false});
             RootNavigation.Items.Add(new NavigationItem() { PageType = typeof(DetailPage), Cache = false});
@@ -70,7 +72,7 @@ namespace MyComputerManager
                     var res = _navigationService.Navigate(typeof(MainPage));
                     //var res = _navigationService.Navigate(typeof(Input));
                 });
-
+                
                 return true;
             });
         }
