@@ -270,6 +270,8 @@
     <Compile Include="Controls\RegBox.xaml.cs">
       <DependentUpon>RegBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ItemTypeToEnabledConverter.cs" />
+    <Compile Include="Converters\ItemTypeConverter.cs" />
     <Compile Include="Converters\ValueNullToInverseVisibilityConverter.cs" />
     <Compile Include="Extensions\ClickExt.cs" />
     <Compile Include="Helpers\BitmapHelper.cs" />
@@ -289,6 +291,7 @@
     <Compile Include="Models\CommonResult.cs" />
     <Compile Include="Models\DialogMessage.cs" />
     <Compile Include="Models\NamespaceItem.cs" />
+    <Compile Include="Models\NamespaceItemType.cs" />
     <Compile Include="Mvvm\AsyncCommandBase.cs" />
     <Compile Include="Mvvm\AsyncRelayCommand.cs" />
     <Compile Include="Mvvm\RoutedEventTrigger.cs" />

@@ -17,7 +17,7 @@ namespace MyComputerManager.Models
         {
 
         }
-        public NamespaceItem(string name, string desc, string tip, string exePath, string iconPath, RegistryKey key, RegistryKey key1, bool disabled, string cLSID)
+        public NamespaceItem(string name, string desc, string tip, string exePath, string iconPath, RegistryKey key, RegistryKey key1, bool disabled, string cLSID, ItemType type)
         {
             Name = name;
             Desc = desc;
@@ -28,6 +28,7 @@ namespace MyComputerManager.Models
             RegKey1 = key1;
             isEnabled = !disabled;
             CLSID = cLSID;
+            Type = type;
         }
 
         public NamespaceItem(string name)
@@ -41,6 +42,7 @@ namespace MyComputerManager.Models
             Tip = "";
             ExePath = "";
             IconPath = "";
+            Type = ItemType.MyComputer;
         }
 
         private string cLSID;
@@ -134,13 +136,25 @@ namespace MyComputerManager.Models
             }
         }
 
+        private ItemType type;
+        public ItemType Type
+        {
+            get { return type; }
+            set
+            {
+                type = value;
+                this.RaisePropertyChanged("Type");
+            }
+        }
+
+
         public RegistryKey RegKey { get; set; }
         public RegistryKey RegKey1 { get; set; }
 
         public string RegKey_Namespace
         {
             get {
-                return RegKey.Name + @"\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\" + (IsEnabled ? "NameSpace" : "NameSpaceDisabled") + @"\" + CLSID;
+                return RegKey.Name + @"\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\" + Type.ToString() + @"\" + (IsEnabled ? "NameSpace" : "NameSpaceDisabled") + @"\" + CLSID;
             }
         }
 
@@ -165,7 +179,8 @@ namespace MyComputerManager.Models
                 RegKey1 = RegKey1,
                 IsEnabled = IsEnabled,
                 Icon = Icon,
-                ExePath = ExePath
+                ExePath = ExePath,
+                Type = Type
             };
         }
 

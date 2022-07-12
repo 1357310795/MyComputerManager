@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -34,6 +35,7 @@ namespace MyComputerManager
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            AppDomain.CurrentDomain.FirstChanceException += FirstChanceHandler;
             //Wpf.Ui.Appearance.Accent.Apply(Color.FromRgb(15, 123, 210));
 
             _host = Host.CreateDefaultBuilder(e.Args)
@@ -92,7 +94,13 @@ namespace MyComputerManager
             _host.StopAsync().ConfigureAwait(false);
             _host.Dispose();
             _host = null;
+        }
 
+        public static void FirstChanceHandler(object source, FirstChanceExceptionEventArgs e)
+        {
+                Console.WriteLine("FirstChanceException event raised in {0}: {1}",
+                    AppDomain.CurrentDomain.FriendlyName, e.Exception.Message);
+            //MessageBox.Show(e.Exception.ToString());
         }
     }
 }

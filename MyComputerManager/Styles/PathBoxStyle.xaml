@@ -178,6 +178,7 @@
                             <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
                             <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
                             <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="PlaceholderTextBox" Property="Text" Value="此设置当前不可用" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

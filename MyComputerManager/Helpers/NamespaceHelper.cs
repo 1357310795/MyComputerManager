@@ -15,7 +15,7 @@ namespace MyComputerManager.Helpers
 {
     public static class NamespaceHelper
     {
-        public static List<NamespaceItem> GetItems()
+        public static IEnumerable<NamespaceItem> GetItems()
         {
             try
             {
@@ -38,19 +38,23 @@ namespace MyComputerManager.Helpers
             }
         }
 
-        public static List<NamespaceItem> GetRawItems()
+        public static IEnumerable<NamespaceItem> GetRawItems()
         {
-            var l1 = GetItemsInternal(Registry.CurrentUser, false);
-            var l2 = GetItemsInternal(Registry.LocalMachine, false);
-            var l3 = GetItemsInternal(Registry.CurrentUser, true);
-            var l4 = GetItemsInternal(Registry.LocalMachine, true);
-            return l1.Concat(l2).Concat(l3).Concat(l4).ToList();
+            var l1 = GetItemsInternal(Registry.CurrentUser, false, ItemType.MyComputer);
+            var l2 = GetItemsInternal(Registry.LocalMachine, false, ItemType.MyComputer);
+            var l3 = GetItemsInternal(Registry.CurrentUser, true, ItemType.MyComputer);
+            var l4 = GetItemsInternal(Registry.LocalMachine, true, ItemType.MyComputer);
+            var l5 = GetItemsInternal(Registry.CurrentUser, false, ItemType.Desktop);
+            //var l6 = GetItemsInternal(Registry.LocalMachine, false, ItemType.Desktop);
+            var l7 = GetItemsInternal(Registry.CurrentUser, true, ItemType.Desktop);
+            //var l8 = GetItemsInternal(Registry.LocalMachine, true, ItemType.Desktop);
+            return l1.Concat(l2).Concat(l3).Concat(l4).Concat(l5).Concat(l7);
         }
 
-        public static List<NamespaceItem> GetItemsInternal(RegistryKey rootkey, bool disabled)
+        public static List<NamespaceItem> GetItemsInternal(RegistryKey rootkey, bool disabled, ItemType type)
         {
             var list = new List<NamespaceItem>();
-            var LocalMachineNamespace = rootkey.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace" + (disabled ? "Disabled" : ""), false);
+            var LocalMachineNamespace = rootkey.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\" + type.ToString() + @"\NameSpace" + (disabled ? "Disabled" : ""), false);
             if (LocalMachineNamespace == null)
                 return new List<NamespaceItem>();
             foreach (var item in LocalMachineNamespace.GetSubKeyNames())
@@ -89,7 +93,7 @@ namespace MyComputerManager.Helpers
                     string exepath = (string)(exekey?.GetValue("") ?? "");
 
                     if (name == "") continue;
-                    list.Add(new NamespaceItem(name, desc, tip, exepath, iconpath, rootkey, clsidrootkey, disabled, item));
+                    list.Add(new NamespaceItem(name, desc, tip, exepath, iconpath, rootkey, clsidrootkey, disabled, item, type));
                 }
             }
             return list;
@@ -99,7 +103,7 @@ namespace MyComputerManager.Helpers
         {
             try
             {
-                var namespaceKey = item.RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace" + (item.IsEnabled ? "" : "Disabled"), true);
+                var namespaceKey = item.RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\" +item.Type.ToString()+ @"\NameSpace" + (item.IsEnabled ? "" : "Disabled"), true);
                 if (namespaceKey == null)
                     return new CommonResult(false, "找不到Namespace key");
                 var namespaceSubKey = namespaceKey.CreateSubKey(item.CLSID, true);
@@ -165,16 +169,16 @@ namespace MyComputerManager.Helpers
             {
                 if (isEnabled)
                 {
-                    var namespacekey = item.RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace");
-                    var namespacekey1 = item.RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpaceDisabled");
+                    var namespacekey = item.RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\" + item.Type.ToString() + @"\NameSpace");
+                    var namespacekey1 = item.RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\" + item.Type.ToString() + @"\NameSpaceDisabled");
                     var newkey = namespacekey.CreateSubKey(item.CLSID);
                     namespacekey1.DeleteSubKey(item.CLSID);
                     newkey.SetValue("", item.Name, RegistryValueKind.String);
                 }
                 else
                 {
-                    var namespacekey = item.RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpaceDisabled");
-                    var namespacekey1 = item.RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace");
+                    var namespacekey = item.RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\" + item.Type.ToString() + @"\NameSpaceDisabled");
+                    var namespacekey1 = item.RegKey.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\" + item.Type.ToString() + @"\NameSpace");
                     var newkey = namespacekey.CreateSubKey(item.CLSID);
                     namespacekey1.DeleteSubKey(item.CLSID);
                     newkey.SetValue("", item.Name, RegistryValueKind.String);
@@ -191,7 +195,7 @@ namespace MyComputerManager.Helpers
         {
             try
             {
-                var namespaceKey = item.RegKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace" + (item.IsEnabled ? "" : "Disabled"), true);
+                var namespaceKey = item.RegKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\" + item.Type.ToString() + @"\NameSpace" + (item.IsEnabled ? "" : "Disabled"), true);
                 if (namespaceKey == null)
                     return new CommonResult(false, "找不到Namespace key");
                 namespaceKey.DeleteSubKeyTree(item.CLSID, false);

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:views="clr-namespace:MyComputerManager.Views"
-                    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+                    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:converters="clr-namespace:MyComputerManager.Converters">
 
     <DataTemplate x:Key="ListItemDataTemplate">
         <ui:CardControl Margin="4,0,4,2"
@@ -15,19 +15,26 @@
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Margin="12,0"
                                 Grid.Column="0">
-                        <TextBlock Text="{Binding Name}"
-                                   FontWeight="Medium"
+                        <StackPanel.Resources>
+                            <converters:ItemTypeConverter x:Key="ItemTypeConverter"/>
+                        </StackPanel.Resources>
+                        <TextBlock FontWeight="Medium"
                                    ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
-                                   FontSize="13"/>
+                                   FontSize="13">
+                            <Run Text="{Binding Name}" />
+                            <Run Text="{Binding Type, Converter={StaticResource ItemTypeConverter}}" />
+                        </TextBlock>
                         <TextBlock HorizontalAlignment="Left"
                                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                                    Text="{Binding ExePath}"
                                    ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
-                                   FontSize="12"/>
+                                   FontSize="12" />
                     </StackPanel>
                 </DockPanel>
             </ui:CardControl.Header>
-            <ui:ToggleSwitch IsChecked="{Binding IsEnabled}" Command="{Binding DataContext.ToggleCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:MainPage}}}" CommandParameter="{Binding}"/>
+            <ui:ToggleSwitch IsChecked="{Binding IsEnabled}"
+                             Command="{Binding DataContext.ToggleCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:MainPage}}}"
+                             CommandParameter="{Binding}" />
         </ui:CardControl>
     </DataTemplate>
 
