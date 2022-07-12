@@ -291,6 +291,7 @@
     <Compile Include="Models\NamespaceItem.cs" />
     <Compile Include="Mvvm\AsyncCommandBase.cs" />
     <Compile Include="Mvvm\AsyncRelayCommand.cs" />
+    <Compile Include="Mvvm\RoutedEventTrigger.cs" />
     <Compile Include="Services\ApplicationHostService.cs" />
     <Compile Include="Services\Contracts\IDataService.cs" />
     <Compile Include="Services\Contracts\ISnackBarService.cs" />

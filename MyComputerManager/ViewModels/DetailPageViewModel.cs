@@ -131,23 +131,7 @@ namespace MyComputerManager.ViewModels
         public AsyncRelayCommand DeleteCommand { get; set; }
         public AsyncRelayCommand ExportCommand { get; set; }
 
-        public void ButtonOpenIcon_Click(object obj)
-        {
-            MouseButtonEventArgs e = (MouseButtonEventArgs)obj;
-            if (e != null)
-                if (e.ChangedButton != MouseButton.Left)
-                    return;
-            OpenFileDialog d = new OpenFileDialog();
-            d.Filter = StringHelper.BuildFilter("exe,ico,dll");
-            if (d.ShowDialog() ?? false)
-                Item.IconPath = d.FileName;
-
-            Item.Icon = IconHelper.ReadIcon(Item.IconPath);
-            if (Item.Icon == null)
-                Item.IconPath = "";
-        }
-
-        public void ButtonOpenIcon_Click(object sender, RoutedEventArgs e)
+        public void ButtonOpenIcon_Click()
         {
             OpenFileDialog d = new OpenFileDialog();
             d.Filter = StringHelper.BuildFilter("exe,ico,dll");

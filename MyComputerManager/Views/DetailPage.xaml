@@ -4,7 +4,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-           xmlns:local="clr-namespace:MyComputerManager.Views"
+           xmlns:local="clr-namespace:MyComputerManager"
            xmlns:controls="clr-namespace:MyComputerManager.Controls"
            xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
            xmlns:converters="clr-namespace:MyComputerManager.Converters"
@@ -42,9 +42,9 @@
                     <i:EventTrigger EventName="Drop">
                         <i:InvokeCommandAction Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
-                    <i:EventTrigger EventName="Click">
+                    <local:RoutedEventTrigger RoutedEvent="{x:Static ext:ClickExtensions.ClickEvent}">
                         <i:InvokeCommandAction Command="{Binding OpenIconCommand}" />
-                    </i:EventTrigger>
+                    </local:RoutedEventTrigger>
                 </i:Interaction.Triggers>
                 <Grid Background="{DynamicResource ControlFillColorDefaultBrush}">
                     <Image Width="56" Height="56"
