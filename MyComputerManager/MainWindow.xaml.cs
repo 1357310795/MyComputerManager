@@ -48,7 +48,7 @@ namespace MyComputerManager
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //_themeService.SetTheme(ThemeType.Light);
+            _themeService.SetTheme(ThemeType.Light);
             RootNavigation.Frame = RootFrame;
             RootNavigation.Items.Add(new NavigationItem() { PageType = typeof(MainPage), Cache = false});
             RootNavigation.Items.Add(new NavigationItem() { PageType = typeof(DetailPage), Cache = false});
