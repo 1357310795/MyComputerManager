@@ -139,8 +139,8 @@ namespace MyComputerManager.Models
 
         public string RegKey_Namespace
         {
-            get { 
-                return RegKey.Name + @"\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\" + CLSID; 
+            get {
+                return RegKey.Name + @"\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\" + (IsEnabled ? "NameSpace" : "NameSpaceDisabled") + @"\" + CLSID;
             }
         }
 

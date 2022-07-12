@@ -13,7 +13,6 @@
            Background="{DynamicResource ControlFillColorDefaultBrush}"
            d:DesignHeight="400" d:DesignWidth="400"
            mc:Ignorable="d">
-
     <StackPanel x:Name="RootPanel"
                 Margin="10"
                 Orientation="Vertical">
@@ -133,6 +132,13 @@
                        DockPanel.Dock="Left" ToolTip="删除项目"
                        Appearance="Danger">
                 <ui:SymbolIcon Foreground="White" Symbol="Delete16" />
+            </ui:Button>
+            <ui:Button Width="30" Height="30"
+                       Margin="0,0,4,0" Padding="0"
+                       Command="{Binding ExportCommand}"
+                       DockPanel.Dock="Left" ToolTip="导出项目"
+                       Appearance="Success">
+                <ui:SymbolIcon Foreground="White" Symbol="ArrowExportLtr16" />
             </ui:Button>
         </DockPanel>
     </StackPanel>

@@ -53,6 +53,7 @@ namespace MyComputerManager.ViewModels
             ClearIconCommand = new RelayCommand(ButtonClearIcon_Click);
             DropCommand = new RelayCommand(ImageDrop);
             DeleteCommand = new AsyncRelayCommand(ButtonDelete_Click);
+            ExportCommand = new AsyncRelayCommand(ButtonExport_Click);
         }
 
         private NamespaceItem OriItem;
@@ -128,6 +129,7 @@ namespace MyComputerManager.ViewModels
         public RelayCommand ClearIconCommand { get; set; }
         public RelayCommand DropCommand { get; set; }
         public AsyncRelayCommand DeleteCommand { get; set; }
+        public AsyncRelayCommand ExportCommand { get; set; }
 
         public void ButtonOpenIcon_Click(object obj)
         {
@@ -234,6 +236,46 @@ namespace MyComputerManager.ViewModels
                     _snackBarService.Show("操作失败", res2.result, SymbolRegular.ShieldError16);
                     item.IsEnabled = !item.IsEnabled;
                 }
+            }
+        }
+
+        public async Task ButtonExport_Click()
+        {
+            var dialog = new SaveFileDialog();
+            dialog.Filter = "registry file|*.reg";
+            if (dialog.ShowDialog() != true)
+                return;
+            var res1 = await Task.Run(() =>
+            {
+                var filename1 = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                var filename2 = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                ProcessStartInfo psi1 = new ProcessStartInfo("regedit", $"-e {filename1} {Item.RegKey_CLSID}");
+                ProcessStartInfo psi2 = new ProcessStartInfo("regedit", $"-e {filename2} {Item.RegKey_Namespace}");
+                Process p1 = Process.Start(psi1);
+                p1.WaitForExit();
+                Process p2 = Process.Start(psi2);
+                p2.WaitForExit();
+
+                try
+                {
+                    var text1 = File.ReadAllText(filename1);
+                    var text2 = File.ReadAllText(filename2);
+                    text2 = text2.Replace("Windows Registry Editor Version 5.00", "");
+                    File.WriteAllText(dialog.FileName, text1 + text2, Encoding.Unicode);
+                    return 0;
+                }
+                catch(Exception ex)
+                {
+                    return 1;
+                }
+            });
+            if (res1 == 0)
+            {
+                _snackBarService.Show("已导出到", dialog.FileName, SymbolRegular.Info16, ControlAppearance.Secondary, 3000);
+            }
+            else
+            {
+                _snackBarService.Show("操作失败", "原因未知", SymbolRegular.ShieldError16);
             }
         }
     }
