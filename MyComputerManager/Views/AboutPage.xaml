@@ -56,7 +56,7 @@
                    Foreground="{Binding Background, ElementName=Proxy}"
                    Text="GitHub开源地址"
                    TextDecorations="Underline" MouseUp="TextBlock_MouseUp"
-                   FontSize="16" />
+                   FontSize="16" Cursor="Hand" />
         <ui:Button x:Name="Proxy"
                    Width="200" Height="40"
                    Appearance="Primary" Visibility="Collapsed" />
