@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Controls.Interfaces;
 
 namespace MyComputerManager.Services
 {
@@ -18,7 +19,7 @@ namespace MyComputerManager.Services
         private bool buttonresult;
         public void SetDialog(Dialog dialog)
         {
-            _dialog=dialog;
+            _dialog = dialog;
             _dialog.Closed += _dialog_Closed;
             _dialog.ButtonLeftClick += _dialog_ButtonLeftClick;
             _dialog.ButtonRightClick += _dialog_ButtonRightClick;
@@ -27,13 +28,13 @@ namespace MyComputerManager.Services
         private void _dialog_ButtonRightClick(object sender, RoutedEventArgs e)
         {
             buttonresult = true;
-            _dialog.IsShown = false;
+            _dialog.Hide();
         }
 
         private void _dialog_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
             buttonresult = false;
-            _dialog.IsShown = false;
+            _dialog.Hide();
         }
 
         private void _dialog_Closed(Dialog sender, RoutedEventArgs e)
@@ -42,20 +43,21 @@ namespace MyComputerManager.Services
                 source.SetResult(buttonresult);
         }
 
-        public bool ShowDialog(DialogMessage content, double? dialogHeight, ControlAppearance buttonLeftAppearance, string buttonLeftText, ControlAppearance buttonRightAppearance, string buttonRightText)
+        public async Task<bool> ShowDialog(DialogMessage content, double? dialogHeight, ControlAppearance buttonLeftAppearance, string buttonLeftText, ControlAppearance buttonRightAppearance, string buttonRightText)
         {
-            App.Current.Dispatcher.Invoke(() => {
+            var res = await App.Current.Dispatcher.Invoke(async () => {
                 _dialog.DataContext = content;
                 if (dialogHeight != null) _dialog.DialogHeight = dialogHeight.Value;
                 _dialog.ButtonLeftAppearance = buttonLeftAppearance;
                 _dialog.ButtonRightAppearance = buttonRightAppearance;
                 _dialog.ButtonLeftName = buttonLeftText;
                 _dialog.ButtonRightName = buttonRightText;
-                _dialog.Show(); 
+                return await _dialog.ShowAndWaitAsync(); 
             });
             source = new TaskCompletionSource<bool>();
             source.Task.Wait();
-            return source.Task.Result;
+            return buttonresult;
         }
+
     }
 }

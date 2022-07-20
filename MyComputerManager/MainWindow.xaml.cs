@@ -14,6 +14,7 @@ using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using IDialogService = MyComputerManager.Services.Contracts.IDialogService;
 
 namespace MyComputerManager
 {
@@ -34,7 +35,7 @@ namespace MyComputerManager
             //var c = Accent.GetColorizationColor();
             //System.Windows.MessageBox.Show(c.ToString());
             SetPageService(pageService);
-            navigationService.SetNavigation(RootNavigation);
+            navigationService.SetNavigationControl(RootNavigation);
             snackBarService.SetSnackbar(RootSnackbar);
             dialogService.SetDialog(RootDialog);
             _dataService = dataService;

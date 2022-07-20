@@ -21,7 +21,8 @@ using Wpf.Ui.Demo.Models;
 using Wpf.Ui.Demo.Services;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
-
+using DialogService = MyComputerManager.Services.DialogService;
+using IDialogService = MyComputerManager.Services.Contracts.IDialogService;
 
 namespace MyComputerManager
 {

@@ -14,6 +14,6 @@ namespace MyComputerManager.Services.Contracts
     {
         void SetDialog(Dialog dialog);
 
-        bool ShowDialog(DialogMessage content, double? dialogHeight, ControlAppearance buttonLeftAppearance, string buttonLeftText, ControlAppearance buttonRightAppearance, string buttonRightText);
+        Task<bool> ShowDialog(DialogMessage content, double? dialogHeight, ControlAppearance buttonLeftAppearance, string buttonLeftText, ControlAppearance buttonRightAppearance, string buttonRightText);
     }
 }

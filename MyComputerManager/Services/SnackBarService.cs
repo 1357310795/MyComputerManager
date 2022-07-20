@@ -22,7 +22,7 @@ namespace MyComputerManager.Services
             _snackbar.Icon = icon;
             _snackbar.Appearance = appearance;
             _snackbar.Timeout = timeout;
-            _snackbar.ShowCloseButton = showclosebutton;
+            _snackbar.CloseButtonEnabled = showclosebutton;
             _snackbar.Show(title, message);
         }
     }

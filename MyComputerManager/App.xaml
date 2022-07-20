@@ -7,14 +7,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ui:Resources Theme="Dark"/>
+                <ui:ControlsDictionary />
+                <ui:ThemesDictionary Theme="Dark"/>
                 <ResourceDictionary Source="Styles/ItemListStyle.xaml"/>
                 <ResourceDictionary Source="Styles/PathBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/MenuButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <FontFamily x:Key="ContentControlThemeFontFamily">微软雅黑</FontFamily>
-            <FontFamily x:Key="DFontFamily">微软雅黑</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

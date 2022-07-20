@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using GalaSoft.MvvmLight;
+using Microsoft.Win32;
 using MyComputerManager.Controls;
 using MyComputerManager.Helpers;
 using MyComputerManager.Models;
@@ -17,10 +18,11 @@ using System.Windows;
 using System.Windows.Input;
 using Wpf.Ui.Common;
 using Wpf.Ui.Mvvm.Contracts;
+using IDialogService = MyComputerManager.Services.Contracts.IDialogService;
 
 namespace MyComputerManager.ViewModels
 {
-    public class DetailPageViewModel : Wpf.Ui.Mvvm.ViewModelBase
+    public class DetailPageViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
@@ -64,7 +66,7 @@ namespace MyComputerManager.ViewModels
             set
             {
                 item = value;
-                this.OnPropertyChanged("Item");
+                this.RaisePropertyChanged("Item");
             }
         }
 

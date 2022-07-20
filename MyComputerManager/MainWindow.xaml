@@ -78,7 +78,7 @@
             </StackPanel>
         </Grid>
 
-        <ui:TitleBar Title="MyComputerManager - v1.03"
+        <ui:TitleBar Title="MyComputerManager - v1.04"
                      Padding="10,10,10,12"
                      Grid.Row="0"
                      Icon="/Resources/openbox.ico"
@@ -87,7 +87,7 @@
         <ui:Dialog x:Name="RootDialog"
                    Grid.Row="1" Grid.RowSpan="2"
                    DialogHeight="200" ButtonRightAppearance="Danger"
-                   ButtonLeftName="Click me if you can!" IsShown="False">
+                   ButtonLeftName="Click me if you can!">
             <Grid>
                 <StackPanel>
                     <TextBlock Text="{Binding Title}"
@@ -105,9 +105,8 @@
                      MaxWidth="600"
                      Grid.Row="1" Grid.RowSpan="2"
                      Appearance="Secondary" Icon="PuzzlePiece24"
-                     IsShown="False"
                      Message="Remember that the Heat Death of Universe is coming someday, no time to explain - let's go!"
-                     ShowCloseButton="True" Timeout="5000" />
+                     CloseButtonEnabled="True" Timeout="5000" />
 
     </Grid>
 </ui:UiWindow>

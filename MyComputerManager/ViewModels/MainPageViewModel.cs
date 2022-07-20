@@ -1,4 +1,5 @@
-﻿using MyComputerManager.Helpers;
+﻿using GalaSoft.MvvmLight;
+using MyComputerManager.Helpers;
 using MyComputerManager.Models;
 using MyComputerManager.Services.Contracts;
 using MyComputerManager.Views;
@@ -14,7 +15,7 @@ using Wpf.Ui.Mvvm.Contracts;
 
 namespace MyComputerManager.ViewModels
 {
-    public class MainPageViewModel : Wpf.Ui.Mvvm.ViewModelBase
+    public class MainPageViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
         private readonly IDataService _dataService;
@@ -38,7 +39,7 @@ namespace MyComputerManager.ViewModels
             set
             {
                 items = value;
-                this.OnPropertyChanged("Items");
+                this.RaisePropertyChanged("Items");
             }
         }
 

@@ -45,7 +45,7 @@
                    FontSize="20" />
         <TextBlock HorizontalAlignment="Center"
                    Margin="0,6,0,0"
-                   Text="v1.03"
+                   Text="v1.04"
                    FontSize="16" />
         <TextBlock HorizontalAlignment="Center"
                    Margin="0,6,0,0"
