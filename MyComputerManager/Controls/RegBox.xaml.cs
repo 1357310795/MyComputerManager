@@ -33,7 +33,14 @@ namespace MyComputerManager.Controls
 
         private void ButtonOpen_Click(object sender, RoutedEventArgs e)
         {
-            RegistryEditor.OpenRegistryEditor(RegPath);
+            try
+            {
+                RegistryEditor.OpenRegistryEditor(RegPath);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "错误", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
     }
 }
